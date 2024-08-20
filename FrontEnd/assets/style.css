@@ -128,16 +128,34 @@ table {
     border-spacing: 0;
 }
 /** end reset css**/
+
+:root {
+    --main-bg-color: #fffef8;
+}
+
+html{
+    background-color: white;
+}
+
 body {
-    max-width: 1140px;
+    max-width: 1440px;
     margin: auto;
     font-family: "Work Sans";
     font-size: 14px;
+    background-color: var(--main-bg-color);
 }
+
 header {
+    max-width: 1140px;
     display: flex;
     justify-content: space-between;
-    margin: 50px 0 140px;
+    padding-top:50px;
+    margin: 0 auto 140px;
+}
+
+main {
+    max-width: 1140px;
+    margin: auto;
 }
 section {
     margin: 50px 0;
@@ -186,7 +204,8 @@ nav li img {
 }
 
 li:hover {
-    color: #b1663c;
+    font-weight: bold;
+    cursor: pointer;
 }
 #introduction {
     display: flex;
@@ -216,6 +235,10 @@ li:hover {
     margin-bottom: 15px;
     font-weight: 400;
     line-height: 16.42px;
+}
+
+#portfolio {
+    margin: 0 95px 60px;
 }
 #portfolio h2 {
     text-align: center;
@@ -283,7 +306,6 @@ li:hover {
 }
 #contact form {
     text-align: left;
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
 }
@@ -295,7 +317,7 @@ li:hover {
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 #contact label {
-    margin: 2em 0 1em 0;
+    margin: 40px 0 1em 0;
 }
 #contact textarea {
     border: none;
@@ -307,12 +329,76 @@ input[type="submit"] {
     font-weight: 700;
     color: white;
     background-color: #1d6154;
-    margin: 2em auto;
+    margin: 40px auto;
     width: 180px;
     text-align: center;
     border-radius: 60px;
 }
 
+/* =========================================== */
+/* FORM */
+/* =========================================== */
+.login-form {
+    margin: 200px auto;
+    width: 380px;
+}
+
+.login-form h2 {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.login-form form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.login-form label {
+    font-family: "Work Sans";
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.login-form form input {
+    box-shadow: 0px 4px 14px 0px #00000017;
+    width: 380px;
+    height: 50px;
+    border: none;
+    padding: 0 10px;
+    margin-bottom: 30px;
+}
+
+.login-form form input[type="submit"] {
+    width: 180px;
+    height: 36px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.login-form form input[type="submit"]:hover {
+    box-shadow: 0 8px 12px 0 rgba(29, 97, 84, 0.24),
+        0 12px 30px 0 rgba(29, 97, 84, 0.19);
+}
+
+.forgotten-password {
+    text-align: center;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+/* =========================================== */
+/* FOOTER */
+/* =========================================== */
+
+footer {
+    background-color: white;
+    height: 60px;
+    max-width: 1440px;
+    align-content: center;
+    padding: 0 95px;
+}
 footer nav ul {
     display: flex;
     justify-content: flex-end;
