@@ -1,22 +1,22 @@
-// Get data from API
-const reponseWorks = await fetch("http://localhost:5678/api/works");
-const works = await reponseWorks.json();
-const reponseCategories = await fetch("http://localhost:5678/api/categories");
-const categories = await reponseCategories.json();
+let filter = "Tous";
 
-let filter =  "Tous";
+populateFilterBar();
 
-// Set all categories
-const categoriesSet = new Set();
-categoriesSet.add("Tous");
+async function populateFilterBar() {
+    // Get data from API
+    const reponseCategories = await fetch(
+        "http://localhost:5678/api/categories"
+    );
+    const categories = await reponseCategories.json();
 
-for (let i = 0; i < categories.length; i++) {
-    categoriesSet.add(categories[i].name);
-}
+    // Set all categories
+    const categoriesSet = new Set();
+    categoriesSet.add("Tous");
 
-populateFilterBar(categories);
+    for (let i = 0; i < categories.length; i++) {
+        categoriesSet.add(categories[i].name);
+    }
 
-function populateFilterBar(categories) {
     // Get DOM element hosting filter bar
     const filterBar = document.querySelector(".filter-bar");
     filterBar.innerHTML = "";
@@ -34,7 +34,7 @@ function populateFilterBar(categories) {
         filterBarButton.addEventListener("click", function () {
             filter = category;
             populateFilterBar(categories);
-            populateWorks(works, filter);
+            populateWorks(filter);
         });
 
         // Add Button to Filter Bar
@@ -42,9 +42,12 @@ function populateFilterBar(categories) {
     }
 }
 
-populateWorks(works, filter);
+populateWorks(filter);
 
-function populateWorks(works, filter) {
+async function populateWorks(filter) {
+    // Get data from API
+    const reponseWorks = await fetch("http://localhost:5678/api/works");
+    const works = await reponseWorks.json();
     // Get DOM element hosting works
     const sectionGallery = document.querySelector(".gallery");
     sectionGallery.innerHTML = "";

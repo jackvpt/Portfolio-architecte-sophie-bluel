@@ -133,7 +133,7 @@ table {
     --main-bg-color: #fffef8;
 }
 
-html{
+html {
     background-color: white;
 }
 
@@ -149,7 +149,7 @@ header {
     max-width: 1140px;
     display: flex;
     justify-content: space-between;
-    padding-top:50px;
+    padding-top: 50px;
     margin: 0 auto 140px;
 }
 
@@ -344,7 +344,7 @@ input[type="submit"] {
 }
 
 .login-form h2 {
-    margin-bottom: 35px;
+    margin-bottom: 5px;
     text-align: center;
 }
 
@@ -358,7 +358,7 @@ input[type="submit"] {
     font-family: "Work Sans";
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin: 30px 0 10px;
 }
 
 .login-form form input {
@@ -367,7 +367,6 @@ input[type="submit"] {
     height: 50px;
     border: none;
     padding: 0 10px;
-    margin-bottom: 30px;
 }
 
 .login-form form input[type="submit"] {
@@ -386,6 +385,14 @@ input[type="submit"] {
     text-align: center;
     font-weight: 500;
     text-decoration: underline;
+}
+
+.invalid-user {
+    margin: 5px 0;
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    visibility: hidden;
 }
 
 /* =========================================== */
