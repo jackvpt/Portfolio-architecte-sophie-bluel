@@ -9,6 +9,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="works.js" defer></script>
@@ -16,15 +19,20 @@
 
 <body>
 	<header>
-		<h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
-		<nav>
-			<ul>
-				<li>projets</li>
-				<li>contact</li>
-				<li>login</li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-			</ul>
-		</nav>
+		<div class="edition-mode">
+			<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>
+		</div>
+		<div class="header-logo-nav">
+			<h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
+			<nav>
+				<ul>
+					<li><a href="#projets">projets</a></li>
+					<li><a href="#contact">contact</a></li>
+					<li id="anchor-login-logout">login</li>
+					<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 	<main>
 		<section id="introduction">
@@ -43,8 +51,11 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
-
+			<div class="portfolio-title">
+				<p class="ghost-element">ghost element</p>
+				<h2 id="projets">Mes Projets</h2>
+				<p class="portfolio-modify"><i class="fa-regular fa-pen-to-square"></i>modifier</p>
+			</div>
 			<!-- FILTER BAR -->
 			<div class="filter-bar">
 				<!-- Elements added dynamically -->

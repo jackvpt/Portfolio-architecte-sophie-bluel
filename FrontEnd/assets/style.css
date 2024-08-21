@@ -91,6 +91,7 @@ video {
     font: inherit;
     vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -105,17 +106,21 @@ nav,
 section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol,
 ul {
     list-style: none;
 }
+
 blockquote,
 q {
     quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -123,10 +128,12 @@ q:after {
     content: "";
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 /** end reset css**/
 
 :root {
@@ -145,7 +152,11 @@ body {
     background-color: var(--main-bg-color);
 }
 
-header {
+/* =========================================== */
+/* HEADER */
+/* =========================================== */
+
+.header-logo-nav {
     max-width: 1140px;
     display: flex;
     justify-content: space-between;
@@ -153,10 +164,40 @@ header {
     margin: 0 auto 140px;
 }
 
+.header-logo-nav a {
+    text-decoration: none;
+}
+
+.header-logo-nav li {
+    font-size: 16px;
+}
+
+.header-logo-nav .active-page {
+    font-weight: bold;
+}
+
+.edition-mode {
+    background-color: black;
+    height: 60px;
+    align-content: center;
+}
+
+.edition-mode p {
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+}
+
+.edition-mode i {
+    margin-right: 10px;
+}
+
 main {
     max-width: 1140px;
     margin: auto;
 }
+
 section {
     margin: 50px 0;
 }
@@ -170,7 +211,7 @@ h1 {
     color: #b1663c;
 }
 
-h1 > span {
+h1>span {
     font-family: "Work Sans";
     font-size: 10px;
     letter-spacing: 0.05em;
@@ -186,6 +227,7 @@ h2 {
     font-size: 30px;
     color: #1d6154;
 }
+
 nav ul {
     display: flex;
     justify-content: space-between;
@@ -193,8 +235,9 @@ nav ul {
     align-items: center;
     list-style-type: none;
 }
+
 nav li :not(img) {
-    font-size: 1.2em;
+    font-size: 16px;
     width: 55px;
     text-align: center;
 }
@@ -207,6 +250,7 @@ li:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
 #introduction {
     display: flex;
     justify-content: space-between;
@@ -214,9 +258,11 @@ li:hover {
     align-items: center;
     margin: 0 95px 140px 95px;
 }
+
 #introduction figure {
     flex: 1;
 }
+
 #introduction img {
     display: block;
     margin: auto;
@@ -240,9 +286,34 @@ li:hover {
 #portfolio {
     margin: 0 95px 60px;
 }
+
+.portfolio-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 45px;
+}
+
+ .portfolio-title .ghost-element {
+    margin-right: auto;
+    visibility: hidden;
+}
+
+.portfolio-title .portfolio-modify {
+    margin-right: auto;
+}
+
+.portfolio-title .portfolio-modify i {
+    margin-right: 10px;
+}
+
+
+
 #portfolio h2 {
+    display:flex;
     text-align: center;
-    margin-bottom: 50px;
+    margin: 0 30px;
 }
 
 /* =========================================== */
@@ -252,7 +323,9 @@ li:hover {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     gap: 10px;
+    height:50px;
     margin-bottom: 50px;
 }
 
@@ -263,10 +336,12 @@ li:hover {
     font-weight: 700;
     color: #1d6154;
     min-width: 100px;
-    padding: 10px;
+    padding: 0 10px;
     border: 1px solid rgb(29, 97, 84);
     border-radius: 60px;
     text-align: center;
+    align-content: center;
+    height:37px;
 }
 
 .filter-bar button:hover {
@@ -289,21 +364,26 @@ li:hover {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+    margin-top:45px;
 }
 
 .gallery img {
     width: 100%;
 }
+
 #contact {
     width: 50%;
     margin: auto;
 }
-#contact > * {
+
+#contact>* {
     text-align: center;
 }
+
 #contact h2 {
     margin-bottom: 20px;
 }
+
 #contact form {
     text-align: left;
     display: flex;
@@ -316,9 +396,11 @@ li:hover {
     border: none;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
     margin: 40px 0 1em 0;
 }
+
 #contact textarea {
     border: none;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -406,6 +488,7 @@ footer {
     align-content: center;
     padding: 0 95px;
 }
+
 footer nav ul {
     display: flex;
     justify-content: flex-end;

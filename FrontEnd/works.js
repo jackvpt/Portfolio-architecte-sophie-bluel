@@ -1,8 +1,46 @@
 let filter = "Tous";
 
+checkLogin()
+
 populateFilterBar();
 
+populateWorks(filter);
+
+
+document.getElementById("anchor-login-logout").addEventListener("click", function () {
+    // State is logged in - Action is logging out
+    if (window.localStorage.getItem("loginToken") !== null) {
+        window.localStorage.removeItem("loginToken")
+        checkLogin()
+    } else { // Stage is logged out - Action is logging in
+        window.location.replace("login.html")
+    }
+})
+
+function checkLogin() {
+    if (window.localStorage.getItem("loginToken") !== null) {
+        document.querySelector(".edition-mode").style.display = "block"
+        document.querySelector(".portfolio-modify").style.display = "block"
+        document.querySelector(".filter-bar").style.display = "none"
+        document.getElementById("anchor-login-logout").innerText = "logout"
+    } else {
+        document.querySelector(".edition-mode").style.display = "none"
+        document.querySelector(".portfolio-modify").style.visibility = "hidden"
+        document.getElementById("anchor-login-logout").innerText = "login"
+        document.querySelector(".filter-bar").style.display = "flex"
+
+    }
+}
+
 async function populateFilterBar() {
+    if (window.localStorage.getItem("loginToken") !== null) {
+        document.querySelector(".filter-bar").visibility = "hidden"
+    }
+    else {
+        document.querySelector(".filter-bar").visibility = "visible"
+    }
+
+
     // Get data from API
     const reponseCategories = await fetch(
         "http://localhost:5678/api/categories"
@@ -42,7 +80,7 @@ async function populateFilterBar() {
     }
 }
 
-populateWorks(filter);
+
 
 async function populateWorks(filter) {
     // Get data from API
