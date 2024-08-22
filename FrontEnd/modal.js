@@ -19,9 +19,13 @@ const openModal = async function (e) {
     modal.removeAttribute("aria-hidden");
     modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal);
+
+
     modal
         .querySelector(".js-modal-close")
         .addEventListener("click", closeModal);
+
+        
     modal
         .querySelector(".js-modal-stop")
         .addEventListener("click", stopPropagation);

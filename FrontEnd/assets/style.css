@@ -211,7 +211,7 @@ h1 {
     color: #b1663c;
 }
 
-h1>span {
+h1 > span {
     font-family: "Work Sans";
     font-size: 10px;
     letter-spacing: 0.05em;
@@ -383,7 +383,7 @@ li:hover {
     margin: auto;
 }
 
-#contact>* {
+#contact > * {
     text-align: center;
 }
 
@@ -437,13 +437,15 @@ input[type="submit"] {
     text-align: center;
 }
 
-.login-form form {
+.login-form,
+.modal-addPhoto form {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 }
 
-.login-form label {
+.login-form,
+.modal-addPhoto label {
     font-family: "Work Sans";
     font-size: 14px;
     font-weight: 500;
@@ -458,7 +460,8 @@ input[type="submit"] {
     padding: 0 10px;
 }
 
-.login-form form input[type="submit"] {
+.login-form,
+.modal-addPhoto form input[type="submit"] {
     width: 180px;
     height: 36px;
     margin-top: 10px;
@@ -523,7 +526,7 @@ html {
     max-height: calc(100vh - 20px);
     padding: 20px;
     background-color: white;
-    animation: slideFromTop .3s both;
+    animation: slideFromTop 0.3s both;
 }
 
 .modal[aria-hidden="true"] {
@@ -537,7 +540,7 @@ html {
 .modal-header {
     margin: 26px 10px 10px;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
 }
 
 .modal-header button {
@@ -546,7 +549,11 @@ html {
     cursor: pointer;
 }
 
-.modal-galery h1 {
+.modal-galery .modal-header {
+    justify-content: right;
+}
+
+.modal-wrapper h1 {
     font-family: "Work Sans";
     font-size: 26px;
     font-weight: 400;
@@ -556,7 +563,7 @@ html {
 }
 
 .modal-portfolio {
-    width: 400px;
+    width: 420px;
     margin: 0 auto 70px;
     display: flex;
     flex-direction: row;
@@ -612,15 +619,77 @@ html {
     background-color: black;
     z-index: 1;
     cursor: pointer;
-    color:white;
-    padding:0;
+    color: white;
+    padding: 0;
 }
 
 .modal-button-trash:hover {
-    color:black;
+    color: black;
     background-color: white;
 }
 
+.modal-imagePicker {
+    width: 420px;
+    background-color: #e8f1f6;
+    border-radius: 3px;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.modal-imagePicker img {
+    width: 76px;
+}
+
+.modal-imagePicker button {
+    font-family: "Work Sans";
+    font-weight: 500;
+    font-size: 14px;
+    width: 240px;
+    height: 36px;
+    cursor: pointer;
+    color: #306685;
+    background-color: #cbd6dc;
+    border-radius: 60px;
+    border: none;
+}
+
+.modal-imagePicker p {
+    font-family: "Work Sans";
+    font-weight: 400;
+    font-size: 10px;
+}
+
+.modal-addForm {
+    width: 420px;
+    margin: auto;
+}
+
+.modal-addForm input {
+    box-shadow: 0px 4px 14px 0px #00000017;
+    height: 50px;
+    border: none;
+    padding: 0 10px;
+}
+
+.modal-line {
+    width: 400px;
+    margin: 45px 0 35px;
+    border-top: 1px solid #b3b3b3;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-addForm input[type="submit"]
+{
+    margin-bottom:0;
+    width:240px;
+    background-color: #A7A7A7;
+}
 
 @keyframes fadeIn {
     from {

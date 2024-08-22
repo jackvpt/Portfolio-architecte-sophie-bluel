@@ -87,21 +87,49 @@
 		<aside id="modalModify" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"
 			style="display:none">
 			<div class="modal-wrapper js-modal-stop">
-				<div class="modal-header">
-					<button class="js-modal-close"><i class="fa fa-2xl fa-times"></i></button>
-				</div>
-				<section class="modal-galery">
-					<h1 id="titlemodal">Galerie photo</h1>
-					<div class="modal-portfolio">
-						<!-- Elements added dynamically -->
+				<!-- PHOTO GALERY -->
+				<div class="modal-galery">
+					<div class="modal-header">
+						<button class="js-modal-close"><i class="fa fa-2xl fa-times"></i></button>
 					</div>
-				</section>
-				<div class="modal-bottom-button">
-				<button class="modal-btnAddPhoto">Ajouter une photo</button>
-			</div>
+					<section>
+						<h1 id="titlemodal">Galerie photo</h1>
+						<div class="modal-portfolio">
+							<!-- Elements added dynamically -->
+						</div>
+					</section>
+					<div class="modal-bottom-button">
+						<button class="modal-btnAddPhoto">Ajouter une photo</button>
+					</div>
+				</div>
 
-			</div>
+				<!-- PHOTO ADD -->
+				<div class="modal-addPhoto">
+					<div class="modal-header">
+						<button class="js-modal-back"><i class="fa fa-2xl fa-arrow-left"></i></button>
+						<button class="js-modal-close"><i class="fa fa-2xl fa-times"></i></button>
+					</div>
+					<section>
+						<h1 id="titlemodal">Ajout photo</h1>
+						<div class="modal-imagePicker">
+							<img src="assets/icons/picture.svg">
+							<button>+ Ajouter photo</button>
+							<p>jpg, png : 4 mo max</p>
+						</div>
+						<div class="modal-addForm">
+							<form action="#" method="post">
+								<label for="title">Titre</label>
+								<input type="text" id="title" name="tile" required />
+								<label for="category">Catégorie</label>
+								<input list="fdsf" id="category" name="category" required />
+								<div class="modal-line"></div>
+								<input type="submit" value="Valider" />
+							</form>
+						</div>
+					</section>
 
+				</div>
+			</div>
 		</aside>
 
 
