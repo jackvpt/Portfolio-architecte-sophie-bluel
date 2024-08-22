@@ -38,6 +38,9 @@ const openModal = async function (e) {
     modal.querySelector(".modal-btnAddPhoto").addEventListener("click", () => {
         document.querySelector(".modal-galery").style.display = "none";
         document.querySelector(".modal-addPhoto").style.display = "block";
+        document.getElementById("selectedImage").src = "assets/icons/picture.svg"
+        document.getElementById("addImage").style.display = "block"
+        document.getElementById("addImageNote").style.display = "block"
     });
 
     // Button 'Back' click event
@@ -57,14 +60,12 @@ const openModal = async function (e) {
         categoriesSet.add(categories[i].name);
     }
     // Add 'options' to the 'select'
-    categoriesSet.forEach((category) => {
+    categoriesSet.forEach((category, index) => {
         const option = document.createElement("option");
-        option.value = category;
+        option.value = index;
         option.text = category;
         document.getElementById("listCategories").appendChild(option);
     });
-
-    document.getElementById("addImage").addEventListener("click", getFile())
 
     const works = populateWorks("Tous");
 };
@@ -199,20 +200,71 @@ async function populateWorks() {
     }
 }
 
-async function getFile() {
-    const pickerOpts = {
-        types: [
-            {
-                description: "Images",
-                accept: {
-                    "image/*": [".png", ".gif", ".jpeg", ".jpg"],
-                },
-            },
-        ],
-        excludeAcceptAllOption: true,
-        multiple: false,
-    };
-    // open file picker, destructure the one element returned array
-    [fileHandle] = await window.showOpenFilePicker(pickerOpts);
-    return [fileHandle];
+const formNewWork = document.getElementById("formNewWork")
+formNewWork.addEventListener("submit", async function (event) {
+    // Prevent submit default action
+    event.preventDefault();
+
+    formData = await checkNewWorkData()
+    console.log("formdata", formData)
+
+    const loginToken = window.localStorage.getItem("loginToken");
+
+    const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer " + loginToken,
+        },
+        body: formData
+    })
+
+    // REPRENDRE ICI
+    console.log(response)
+})
+
+function triggerInputFile() {
+    document.getElementById("inputFile").click()
 }
+
+async function checkNewWorkData() {
+    // Get data from DOM
+    const image = document.getElementById("inputFile").files[0]
+    // Display image in 'img'
+    document.getElementById("selectedImage").src = URL.createObjectURL(image)
+    document.getElementById("addImage").style.display="none"
+    document.getElementById("addImageNote").style.display="none"
+
+
+    const title = document.getElementById("title").value
+    const categoryName = document.getElementById("listCategories").value
+    let categoryId = 0
+
+    // Build 'FormData' from data
+    const formData = new FormData()
+    formData.append("image", image)
+    formData.append("title", title)
+
+    // Convert category name to category id with API fetch
+    const responseCategories = await fetch(
+        "http://localhost:5678/api/categories"
+    );
+    const categories = await responseCategories.json();
+
+    categories.forEach((category) => {
+        if (category.name === categoryName) {
+            categoryId = parseInt(category.id)
+
+        }
+    })
+    formData.append("category", categoryId)
+
+    if (image && title && categoryName) {
+        document.getElementById("btnSubmitAddNewWork").disabled = false
+        return formData
+    }
+    else {
+        document.getElementById("btnSubmitAddNewWork").disabled = true
+    }
+}
+

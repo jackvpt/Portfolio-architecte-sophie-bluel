@@ -437,19 +437,18 @@ input[type="submit"] {
     text-align: center;
 }
 
-.login-form,
-.modal-addPhoto form {
+.login-form form {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 }
 
-.login-form,
-.modal-addPhoto label {
+.login-form label {
     font-family: "Work Sans";
     font-size: 14px;
     font-weight: 500;
     margin: 30px 0 10px;
+    color:#3d3d3d;
 }
 
 .login-form form input {
@@ -460,8 +459,7 @@ input[type="submit"] {
     padding: 0 10px;
 }
 
-.login-form,
-.modal-addPhoto form input[type="submit"] {
+.login-form form input[type="submit"] {
     width: 180px;
     height: 36px;
     margin-top: 10px;
@@ -581,6 +579,27 @@ html {
     width: 100%;
 }
 
+.modal-addPhoto form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.modal-addPhoto label {
+    font-family: "Work Sans";
+    font-size: 14px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+    color:#3d3d3d;
+}
+
+.modal-addPhoto form input[type="submit"] {
+    width: 180px;
+    height: 36px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 .modal-bottom-button {
     width: 400px;
     margin: auto;
@@ -687,6 +706,8 @@ html {
     height: 50px;
     border: none;
     padding: 0 10px;
+    color:#444444;
+    box-shadow: 0px 4px 14px 0px #00000017;
 }
 
 
@@ -703,7 +724,18 @@ html {
 {
     margin: 30px auto 0;
     width:240px;
+    color:white;
+
+}
+
+.modal-addForm form input[type="submit"]:disabled
+{
     background-color: #A7A7A7;
+}
+
+.modal-addForm form input[type="submit"]:enabled
+{
+    background-color: #1D6154;
 }
 
 @keyframes fadeIn {
