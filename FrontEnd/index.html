@@ -106,7 +106,7 @@
 				<!-- PHOTO ADD -->
 				<div class="modal-addPhoto">
 					<div class="modal-header">
-						<button class="js-modal-back"><i class="fa fa-2xl fa-arrow-left"></i></button>
+						<button class="js-modal-back" id="modalButtonBack"><i class="fa fa-2xl fa-arrow-left"></i></button>
 						<button class="js-modal-close"><i class="fa fa-2xl fa-times"></i></button>
 					</div>
 					<section>
@@ -121,7 +121,14 @@
 								<label for="title">Titre</label>
 								<input type="text" id="title" name="tile" required />
 								<label for="category">Catégorie</label>
-								<input list="fdsf" id="category" name="category" required />
+								<input list="categories" id="listCategories" name="category" required />
+								<datalist id="categories">
+									<option value="Chocolate"></option>
+									<option value="Coconut"></option>
+									<option value="Mint"></option>
+									<option value="Strawberry"></option>
+									<option value="Vanilla"></option>
+								  </datalist>
 								<div class="modal-line"></div>
 								<input type="submit" value="Valider" />
 							</form>

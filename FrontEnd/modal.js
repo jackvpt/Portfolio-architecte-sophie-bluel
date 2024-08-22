@@ -5,11 +5,11 @@ let previouslyFocusedElement = null;
 
 const openModal = async function (e) {
     e.preventDefault();
-    const target = e.target.getAttribute("href")
+    const target = e.target.getAttribute("href");
     if (target.startsWith("#")) {
         modal = document.querySelector(e.target.getAttribute("href"));
     } else {
-        modal = await loadModal(target)
+        modal = await loadModal(target);
     }
 
     focusables = Array.from(modal.querySelectorAll(focusableSelector));
@@ -20,18 +20,55 @@ const openModal = async function (e) {
     modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal);
 
+    // Get all close buttons
+    const allCloseButtons = modal.querySelectorAll(".js-modal-close");
+    allCloseButtons.forEach((closeButton) =>
+        closeButton.addEventListener("click", closeModal)
+    );
 
-    modal
-        .querySelector(".js-modal-close")
-        .addEventListener("click", closeModal);
-
-        
     modal
         .querySelector(".js-modal-stop")
         .addEventListener("click", stopPropagation);
 
-    const works = populateWorks("Tous")
-    console.log(works)
+    // Default display
+    document.querySelector(".modal-galery").style.display = "block";
+    document.querySelector(".modal-addPhoto").style.display = "none";
+
+    // Button 'Add photo' click event
+    modal.querySelector(".modal-btnAddPhoto").addEventListener("click", () => {
+        document.querySelector(".modal-galery").style.display = "none";
+        document.querySelector(".modal-addPhoto").style.display = "block";
+    });
+
+    // Button 'Back' click event
+    modal.querySelector(".js-modal-back").addEventListener("click", () => {
+        document.querySelector(".modal-galery").style.display = "block";
+        document.querySelector(".modal-addPhoto").style.display = "none";
+    });
+
+    // Get categories from API
+    const reponseCategories = await fetch(
+        "http://localhost:5678/api/categories"
+    );
+    const categories = await reponseCategories.json();
+    // Set all categories
+    const categoriesSet = new Set();
+    for (let i = 0; i < categories.length; i++) {
+        categoriesSet.add(categories[i].name);
+    }
+    const dataList = document.createElement("datalist")
+    dataList.setAttribute("id","categories");
+    categoriesSet.forEach((category)=>{
+        const option = document.createElement("option");
+        option.setAttribute("value",category);
+        dataList.appendChild(option)
+    })
+    document.querySelector("#listCategories").dataList = dataList
+    const works = populateWorks("Tous");
+};
+
+const displayFirstPage = function (e) {
+    document.querySelector(".modal-addPhoto").style.display = "none";
 };
 
 const closeModal = function (e) {
@@ -41,7 +78,7 @@ const closeModal = function (e) {
     window.setTimeout(function () {
         modal.style.display = "none";
         modal = null;
-    }, 500)
+    }, 500);
     modal.setAttribute("aria-hidden", "true");
     modal.removeAttribute("aria-modal");
     modal.removeEventListener("click", closeModal);
@@ -77,15 +114,19 @@ const focusInModal = function (e) {
 };
 
 const loadModal = async function (url) {
-    const target = "#" + url.split("#")[1]
-    const existingModal = document.querySelector(target)
-    if (existingModal !== null) return existingModal
-    const html = await fetch(url).then(response => response.text())
-    const element = document.createRange().createContextualFragment(html).querySelector(target)
-    if (element === null) throw `L'élément ${target} n'a pas été trouvé dans la page ${url}`
-    document.body.append(element)
-    return element
-}
+    const target = "#" + url.split("#")[1];
+    const existingModal = document.querySelector(target);
+    if (existingModal !== null) return existingModal;
+    const html = await fetch(url).then((response) => response.text());
+    const element = document
+        .createRange()
+        .createContextualFragment(html)
+        .querySelector(target);
+    if (element === null)
+        throw `L'élément ${target} n'a pas été trouvé dans la page ${url}`;
+    document.body.append(element);
+    return element;
+};
 
 document.querySelectorAll(".js-modal").forEach((a) => {
     a.addEventListener("click", openModal);
@@ -119,13 +160,12 @@ async function populateWorks() {
         const trashButton = document.createElement("button");
         trashButton.className = "modal-button-trash";
         const iconElement = document.createElement("i");
-        iconElement.className ="fa-solid fa-trash-can fa-xs";
-        trashButton.appendChild(iconElement)
+        iconElement.className = "fa-solid fa-trash-can fa-xs";
+        trashButton.appendChild(iconElement);
 
         // Work Element added to Gallery
         modalPortfolio.appendChild(workElement);
         workElement.appendChild(imageElement);
         workElement.appendChild(trashButton);
-
     }
 }
