@@ -669,12 +669,14 @@ html {
     margin: auto;
 }
 
-.modal-addForm input {
+.modal-addForm input, select {
     box-shadow: 0px 4px 14px 0px #00000017;
     height: 50px;
     border: none;
     padding: 0 10px;
 }
+
+
 
 .modal-line {
     width: 400px;
@@ -684,9 +686,9 @@ html {
     justify-content: center;
 }
 
-.modal-addForm input[type="submit"]
+.modal-addForm form input[type="submit"]
 {
-    margin-bottom:0;
+    margin: 30px auto 0;
     width:240px;
     background-color: #A7A7A7;
 }

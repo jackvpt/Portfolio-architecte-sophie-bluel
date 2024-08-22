@@ -51,19 +51,19 @@ const openModal = async function (e) {
         "http://localhost:5678/api/categories"
     );
     const categories = await reponseCategories.json();
-    // Set all categories
+    // Set all categories (avoiding double values)
     const categoriesSet = new Set();
     for (let i = 0; i < categories.length; i++) {
         categoriesSet.add(categories[i].name);
     }
-    const dataList = document.createElement("datalist")
-    dataList.setAttribute("id","categories");
-    categoriesSet.forEach((category)=>{
+    // Add 'options' to the 'select'
+    categoriesSet.forEach((category) => {
         const option = document.createElement("option");
-        option.setAttribute("value",category);
-        dataList.appendChild(option)
+        option.value = category
+        option.text = category
+        document.getElementById("listCategories").appendChild(option)
     })
-    document.querySelector("#listCategories").dataList = dataList
+    
     const works = populateWorks("Tous");
 };
 
