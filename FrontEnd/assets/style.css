@@ -664,6 +664,19 @@ html {
     font-size: 10px;
 }
 
+.modal-imagePicker input[type="file"]::file-selector-button {
+    font-family: "Work Sans";
+    font-weight: 500;
+    font-size: 14px;
+    width: 240px;
+    height: 36px;
+    cursor: pointer;
+    color: #306685;
+    background-color: #cbd6dc;
+    border-radius: 60px;
+    border: none;
+}
+
 .modal-addForm {
     width: 420px;
     margin: auto;

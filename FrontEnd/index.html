@@ -114,7 +114,8 @@
 						<h1 id="titlemodal">Ajout photo</h1>
 						<div class="modal-imagePicker">
 							<img src="assets/icons/picture.svg">
-							<button>+ Ajouter photo</button>
+							<button id="addImage" onclick="">+ Ajouter photo</button>
+							<input id="inputFile" type="file" style="display: none"/>
 							<p>jpg, png : 4 mo max</p>
 						</div>
 						<div class="modal-addForm">
@@ -122,8 +123,9 @@
 								<label for="title">Titre</label>
 								<input type="text" id="title" name="tile" required />
 								<label for="category">Catégorie</label>
-								<select id="listCategories" name="category" />
-								<!-- Elements added dynamically -->
+								<select id="listCategories" name="category">
+									<!-- Elements added dynamically -->
+								</select>
 								<div class="modal-line"></div>
 								<input type="submit" value="Valider" />
 							</form>

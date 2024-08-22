@@ -64,6 +64,8 @@ const openModal = async function (e) {
         document.getElementById("listCategories").appendChild(option);
     });
 
+    document.getElementById("addImage").addEventListener("click", getFile())
+
     const works = populateWorks("Tous");
 };
 
@@ -153,13 +155,13 @@ async function populateWorks() {
         const work = works[i];
         // Tag creation for work
         const workElement = document.createElement("figure");
-        workElement.id ="deleteWorkFigure_"+ work.id;
+        workElement.id = "deleteWorkFigure_" + work.id;
 
         // Tags creation
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         const trashButton = document.createElement("button");
-        trashButton.name =  work.id;
+        trashButton.name = work.id;
         trashButton.className = "modal-button-trash";
         const iconElement = document.createElement("i");
         iconElement.name = work.id;
@@ -179,10 +181,14 @@ async function populateWorks() {
                 }
             );
             if (responseDelete.ok) {
-                const idToDelete = event.target.name
+                const idToDelete = event.target.name;
                 console.log("L'id N° " + idToDelete + " a été supprimé");
-                document.getElementById("deleteWorkFigure_" + idToDelete).style.display="none"
-                document.getElementById("portfolioWorkFigure_" + idToDelete).style.display="none"
+                document.getElementById(
+                    "deleteWorkFigure_" + idToDelete
+                ).style.display = "none";
+                document.getElementById(
+                    "portfolioWorkFigure_" + idToDelete
+                ).style.display = "none";
             }
         });
 
@@ -191,4 +197,22 @@ async function populateWorks() {
         workElement.appendChild(imageElement);
         workElement.appendChild(trashButton);
     }
+}
+
+async function getFile() {
+    const pickerOpts = {
+        types: [
+            {
+                description: "Images",
+                accept: {
+                    "image/*": [".png", ".gif", ".jpeg", ".jpg"],
+                },
+            },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false,
+    };
+    // open file picker, destructure the one element returned array
+    [fileHandle] = await window.showOpenFilePicker(pickerOpts);
+    return [fileHandle];
 }
