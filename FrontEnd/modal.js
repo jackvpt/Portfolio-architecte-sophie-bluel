@@ -63,7 +63,7 @@ const openModal = async function (e) {
         option.text = category
         document.getElementById("listCategories").appendChild(option)
     })
-    
+
     const works = populateWorks("Tous");
 };
 
@@ -158,10 +158,21 @@ async function populateWorks() {
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         const trashButton = document.createElement("button");
+        trashButton.name = work.id
         trashButton.className = "modal-button-trash";
         const iconElement = document.createElement("i");
+        iconElement.name = work.id
         iconElement.className = "fa-solid fa-trash-can fa-xs";
         trashButton.appendChild(iconElement);
+        trashButton.addEventListener("click", async function (event) {
+            console.log("Effacer l'id N°", event.target.name)
+            // Get data from API
+            const url = "http://localhost:5678/api/works/5"
+            console.log("url", url)
+            const responseDelete = await fetch(url);
+            const response = await responseDelete.json();
+            console.log("response",responseDelete)
+        })
 
         // Work Element added to Gallery
         modalPortfolio.appendChild(workElement);
