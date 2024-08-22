@@ -59,10 +59,10 @@ const openModal = async function (e) {
     // Add 'options' to the 'select'
     categoriesSet.forEach((category) => {
         const option = document.createElement("option");
-        option.value = category
-        option.text = category
-        document.getElementById("listCategories").appendChild(option)
-    })
+        option.value = category;
+        option.text = category;
+        document.getElementById("listCategories").appendChild(option);
+    });
 
     const works = populateWorks("Tous");
 };
@@ -153,26 +153,38 @@ async function populateWorks() {
         const work = works[i];
         // Tag creation for work
         const workElement = document.createElement("figure");
+        workElement.id ="deleteWorkFigure_"+ work.id;
 
         // Tags creation
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         const trashButton = document.createElement("button");
-        trashButton.name = work.id
+        trashButton.name =  work.id;
         trashButton.className = "modal-button-trash";
         const iconElement = document.createElement("i");
-        iconElement.name = work.id
+        iconElement.name = work.id;
         iconElement.className = "fa-solid fa-trash-can fa-xs";
         trashButton.appendChild(iconElement);
         trashButton.addEventListener("click", async function (event) {
-            console.log("Effacer l'id N°", event.target.name)
-            // Get data from API
-            const url = "http://localhost:5678/api/works/5"
-            console.log("url", url)
-            const responseDelete = await fetch(url);
-            const response = await responseDelete.json();
-            console.log("response",responseDelete)
-        })
+            // Delete data with API
+            const responseDelete = await fetch(
+                "http://localhost:5678/api/works/" + event.target.name,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            window.localStorage.getItem("loginToken"),
+                    },
+                }
+            );
+            if (responseDelete.ok) {
+                const idToDelete = event.target.name
+                console.log("L'id N° " + idToDelete + " a été supprimé");
+                document.getElementById("deleteWorkFigure_" + idToDelete).style.display="none"
+                document.getElementById("portfolioWorkFigure_" + idToDelete).style.display="none"
+            }
+        });
 
         // Work Element added to Gallery
         modalPortfolio.appendChild(workElement);

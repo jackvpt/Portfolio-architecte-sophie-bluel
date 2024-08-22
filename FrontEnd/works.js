@@ -95,6 +95,7 @@ async function populateWorks(filter) {
         if (filter === "Tous" || filter === work.category.name) {
             // Tag creation for work
             const workElement = document.createElement("figure");
+            workElement.id = "portfolioWorkFigure_" + work.id
             // Tags creation
             const imageElement = document.createElement("img");
             imageElement.src = work.imageUrl;
