@@ -3,6 +3,9 @@ const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let previouslyFocusedElement = null;
 
+// ---------------------------------------------
+// OPEN MODAL
+// ---------------------------------------------
 const openModal = async function (e) {
     e.preventDefault();
     const target = e.target.getAttribute("href");
@@ -69,10 +72,16 @@ const openModal = async function (e) {
     const works = populateWorks("Tous");
 };
 
+// ---------------------------------------------
+// DISPLAY FIRST PAGE
+// ---------------------------------------------
 const displayFirstPage = function (e) {
     document.querySelector(".modal-addPhoto").style.display = "none";
 };
 
+// ---------------------------------------------
+// CLOSE MODAL
+// ---------------------------------------------
 const closeModal = function (e) {
     if (modal === null) return;
     if (previouslyFocusedElement !== null) previouslyFocusedElement.focus();
@@ -92,10 +101,16 @@ const closeModal = function (e) {
         .removeEventListener("click", stopPropagation);
 };
 
+// ---------------------------------------------
+// STOP PROPAGATION
+// ---------------------------------------------
 const stopPropagation = function (e) {
     e.stopPropagation();
 };
 
+// ---------------------------------------------
+// FOCUS IN MODAL
+// ---------------------------------------------
 const focusInModal = function (e) {
     e.preventDefault();
     let index = focusables.findIndex(
@@ -115,6 +130,9 @@ const focusInModal = function (e) {
     focusables[index].focus();
 };
 
+// ---------------------------------------------
+// LOAD MODAL
+// ---------------------------------------------
 const loadModal = async function (url) {
     const target = "#" + url.split("#")[1];
     const existingModal = document.querySelector(target);
@@ -134,6 +152,9 @@ document.querySelectorAll(".js-modal").forEach((a) => {
     a.addEventListener("click", openModal);
 });
 
+// ---------------------------------------------
+// KEYBOARD EVENT
+// ---------------------------------------------
 window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
@@ -143,6 +164,9 @@ window.addEventListener("keydown", function (e) {
     }
 });
 
+// ---------------------------------------------
+// FILL PORTFOLIO
+// ---------------------------------------------
 async function populateWorks() {
     // Get data from API
     const reponseWorks = await fetch("http://localhost:5678/api/works");
@@ -192,13 +216,16 @@ async function populateWorks() {
             }
         });
 
-        // Work Element added to Gallery
+        // Add work Element to Gallery
         modalPortfolio.appendChild(workElement);
         workElement.appendChild(imageElement);
         workElement.appendChild(trashButton);
     }
 }
 
+// ---------------------------------------------
+// SUBMIT EVENT (ADD WORK TO DB)
+// ---------------------------------------------
 const formNewWork = document.getElementById("formNewWork");
 formNewWork.addEventListener("submit", async function (event) {
     // Prevent submit default action
@@ -224,10 +251,16 @@ formNewWork.addEventListener("submit", async function (event) {
     }
 });
 
+// ---------------------------------------------
+// TRIGGER INPUT FILE
+// ---------------------------------------------
 function triggerInputFile() {
     document.getElementById("inputFile").click();
 }
 
+// ---------------------------------------------
+// CHECK WORK DATA
+// ---------------------------------------------
 async function checkNewWorkData() {
     // Get data from DOM
     const image = document.getElementById("inputFile").files[0];

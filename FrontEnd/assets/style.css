@@ -136,6 +136,10 @@ table {
 
 /** end reset css**/
 
+/* =========================================== */
+/* GENERAL */
+/* =========================================== */
+
 :root {
     --main-bg-color: #fffef8;
 }
@@ -150,47 +154,6 @@ body {
     font-family: "Work Sans";
     font-size: 14px;
     background-color: var(--main-bg-color);
-}
-
-/* =========================================== */
-/* HEADER */
-/* =========================================== */
-
-.header-logo-nav {
-    max-width: 1140px;
-    display: flex;
-    justify-content: space-between;
-    padding-top: 50px;
-    margin: 0 auto 140px;
-}
-
-.header-logo-nav a {
-    text-decoration: none;
-}
-
-.header-logo-nav li {
-    font-size: 16px;
-}
-
-.header-logo-nav .active-page {
-    font-weight: bold;
-}
-
-.edition-mode {
-    background-color: black;
-    height: 60px;
-    align-content: center;
-}
-
-.edition-mode p {
-    font-size: 16px;
-    font-weight: 400;
-    color: white;
-    text-align: center;
-}
-
-.edition-mode i {
-    margin-right: 10px;
 }
 
 main {
@@ -228,6 +191,30 @@ h2 {
     color: #1d6154;
 }
 
+/* =========================================== */
+/* HEADER */
+/* =========================================== */
+
+.header-logo-nav {
+    max-width: 1140px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 50px;
+    margin: 0 auto 140px;
+}
+
+.header-logo-nav a {
+    text-decoration: none;
+}
+
+.header-logo-nav li {
+    font-size: 16px;
+}
+
+.header-logo-nav .active-page {
+    font-weight: bold;
+}
+
 nav ul {
     display: flex;
     justify-content: space-between;
@@ -250,6 +237,29 @@ li:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* EDITION MODE */
+
+.edition-mode {
+    background-color: black;
+    height: 60px;
+    align-content: center;
+}
+
+.edition-mode p {
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+}
+
+.edition-mode i {
+    margin-right: 10px;
+}
+
+/* =========================================== */
+/* INTRODUCTION */
+/* =========================================== */
 
 #introduction {
     display: flex;
@@ -365,6 +375,9 @@ li:hover {
     cursor: pointer;
 }
 
+/* =========================================== */
+/* PHOTO GALLERY */
+/* =========================================== */
 .gallery {
     width: 100%;
     display: grid;
@@ -378,6 +391,9 @@ li:hover {
     width: 100%;
 }
 
+/* =========================================== */
+/* CONTACT */
+/* =========================================== */
 #contact {
     width: 50%;
     margin: auto;
@@ -489,20 +505,6 @@ input[type="submit"] {
 /* MODAL */
 /* =========================================== */
 
-/* body,
-html {
-    margin: 0;
-    padding: 0;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-:focus {
-    box-shadow: 0 0 10px blue;
-} */
-
 .modal {
     position: fixed;
     display: flex;
@@ -525,6 +527,15 @@ html {
     padding: 20px;
     background-color: white;
     animation: slideFromTop 0.3s both;
+}
+
+.modal-wrapper h1 {
+    font-family: "Work Sans";
+    font-size: 26px;
+    font-weight: 400;
+    color: black;
+    text-align: center;
+    margin-bottom: 45px;
 }
 
 .modal[aria-hidden="true"] {
@@ -551,15 +562,7 @@ html {
     justify-content: right;
 }
 
-.modal-wrapper h1 {
-    font-family: "Work Sans";
-    font-size: 26px;
-    font-weight: 400;
-    color: black;
-    text-align: center;
-    margin-bottom: 45px;
-}
-
+/* PORTFOLIO */
 .modal-portfolio {
     width: 420px;
     margin: 0 auto 70px;
@@ -579,6 +582,32 @@ html {
     width: 100%;
 }
 
+.modal-btnAddPhoto:hover {
+    box-shadow: 0 8px 12px 0 rgba(29, 97, 84, 0.24),
+        0 12px 30px 0 rgba(29, 97, 84, 0.19);
+}
+
+.modal-button-trash {
+    width: 17px;
+    height: 17px;
+    border-radius: 2px;
+    border: none;
+    position: relative;
+    top: -80%;
+    left: 70%;
+    background-color: black;
+    z-index: 1;
+    cursor: pointer;
+    color: white;
+    padding: 0;
+}
+
+.modal-button-trash:hover {
+    color: black;
+    background-color: white;
+}
+
+/* PHOTO ADD */
 .modal-addPhoto form {
     display: flex;
     flex-direction: column;
@@ -620,31 +649,6 @@ html {
     background-color: #1d6154;
     border-radius: 60px;
     border: none;
-}
-
-.modal-btnAddPhoto:hover {
-    box-shadow: 0 8px 12px 0 rgba(29, 97, 84, 0.24),
-        0 12px 30px 0 rgba(29, 97, 84, 0.19);
-}
-
-.modal-button-trash {
-    width: 17px;
-    height: 17px;
-    border-radius: 2px;
-    border: none;
-    position: relative;
-    top: -80%;
-    left: 70%; 
-    background-color: black;
-    z-index: 1;
-    cursor: pointer;
-    color: white;
-    padding: 0;
-}
-
-.modal-button-trash:hover {
-    color: black;
-    background-color: white;
 }
 
 .modal-imagePicker {

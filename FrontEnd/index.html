@@ -14,11 +14,14 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="works.js" defer></script>
+	<script type="module" src="works.js"></script>
 	<script src="modal.js" defer></script>
 </head>
 
 <body>
+	<!-- ======================= -->
+	<!-- HEADER -->
+	<!-- ======================= -->
 	<header>
 		<div class="edition-mode">
 			<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>
@@ -35,6 +38,10 @@
 			</nav>
 		</div>
 	</header>
+
+	<!-- ======================= -->
+	<!-- MAIN -->
+	<!-- ======================= -->
 	<main>
 		<section id="introduction">
 			<figure>
@@ -51,6 +58,10 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
+
+		<!-- ======================= -->
+		<!-- PORTFOLIO -->
+		<!-- ======================= -->
 		<section id="portfolio">
 			<div class="portfolio-title">
 				<p class="ghost-element">ghost element</p>
@@ -58,6 +69,7 @@
 				<a href="#modalModify" class="js-modal portfolio-modify"><i
 						class="fa-regular fa-pen-to-square"></i>modifier</a>
 			</div>
+
 			<!-- FILTER BAR -->
 			<div class="filter-bar">
 				<!-- Elements added dynamically -->
@@ -67,6 +79,10 @@
 				<!-- Elements added dynamically -->
 			</div>
 		</section>
+
+		<!-- ======================= -->
+		<!-- CONTACT -->
+		<!-- ======================= -->
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
@@ -81,9 +97,11 @@
 			</form>
 		</section>
 
+		<!-- ======================= -->
 		<!-- MODAL -->
+		<!-- ======================= -->
 
-		<aside id="modalModify" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"
+		<div id="modalModify" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"
 			style="display:none">
 			<div class="modal-wrapper js-modal-stop">
 				<!-- PHOTO GALERY -->
@@ -110,12 +128,12 @@
 						<button class="js-modal-close"><i class="fa fa-2xl fa-times"></i></button>
 					</div>
 					<section>
-						<h1 id="titlemodal">Ajout photo</h1>
+						<h1>Ajout photo</h1>
 						<div class="modal-imagePicker">
 							<div class="modal-setImage">
 								<img src="assets/icons/picture.svg" alt="image icon">
 								<button id="addImage" onclick="triggerInputFile()">+ Ajouter photo</button>
-								<input id="inputFile" type="file" style="display:none" onchange="checkNewWorkData()" />
+								<input id="inputFile" type="file" style="display:none" onchange="checkNewWorkData()">
 								<p>jpg, png : 4 mo max</p>
 							</div>
 							<div class="modal-displayImage">
@@ -125,25 +143,25 @@
 						<div class="modal-addForm">
 							<form id="formNewWork" action="#" method="post">
 								<label for="title">Titre</label>
-								<input type="text" id="title" name="title" onchange="checkNewWorkData()" required />
-								<label for="category">Catégorie</label>
+								<input type="text" id="title" name="title" onchange="checkNewWorkData()" required>
+								<label for="listCategories">Catégorie</label>
 								<select id="listCategories" name="category" onchange="checkNewWorkData()">
 									<!-- Elements added dynamically -->
 								</select>
 								<div class="modal-line"></div>
-								<input id="btnSubmitAddNewWork" type="submit" value="Valider" disabled />
+								<input id="btnSubmitAddNewWork" type="submit" value="Valider" disabled>
 							</form>
 						</div>
 					</section>
 
 				</div>
 			</div>
-		</aside>
-
-
-
+		</div>
 	</main>
 
+	<!-- ======================= -->
+	<!-- FOOTER -->
+	<!-- ======================= -->
 	<footer>
 		<nav>
 			<ul>

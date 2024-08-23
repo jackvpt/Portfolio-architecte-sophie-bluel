@@ -6,7 +6,9 @@ populateFilterBar();
 
 populateWorks(filter);
 
-
+// ---------------------------------------------
+// LOGOUT CLICK EVENT
+// ---------------------------------------------
 document.getElementById("anchor-login-logout").addEventListener("click", function () {
     // State is logged in - Action is logging out
     if (window.localStorage.getItem("loginToken") !== null) {
@@ -17,6 +19,9 @@ document.getElementById("anchor-login-logout").addEventListener("click", functio
     }
 })
 
+// ---------------------------------------------
+// CHECK TOKEN AND TOGGLE MODE
+// ---------------------------------------------
 function checkLogin() {
     if (window.localStorage.getItem("loginToken") !== null) {
         document.querySelector(".edition-mode").style.display = "block"
@@ -32,7 +37,11 @@ function checkLogin() {
     }
 }
 
+// ---------------------------------------------
+// FILL FILTER BAR
+// ---------------------------------------------
 async function populateFilterBar() {
+    // Check Token and toggle display
     if (window.localStorage.getItem("loginToken") !== null) {
         document.querySelector(".filter-bar").visibility = "hidden"
     }
@@ -40,14 +49,13 @@ async function populateFilterBar() {
         document.querySelector(".filter-bar").visibility = "visible"
     }
 
-
     // Get data from API
     const reponseCategories = await fetch(
         "http://localhost:5678/api/categories"
     );
     const categories = await reponseCategories.json();
 
-    // Set all categories
+    // Set all categories (avoiding double values)
     const categoriesSet = new Set();
     categoriesSet.add("Tous");
 
@@ -69,6 +77,7 @@ async function populateFilterBar() {
             filterBarButton.classList.add("button-active");
         }
 
+        // Filter click event
         filterBarButton.addEventListener("click", function () {
             filter = category;
             populateFilterBar(categories);
@@ -81,28 +90,33 @@ async function populateFilterBar() {
 }
 
 
-
+// ---------------------------------------------
+// FILL PORTFOLIO
+// ---------------------------------------------
 async function populateWorks(filter) {
     // Get data from API
     const reponseWorks = await fetch("http://localhost:5678/api/works");
     const works = await reponseWorks.json();
+
     // Get DOM element hosting works
     const sectionGallery = document.querySelector(".gallery");
     sectionGallery.innerHTML = "";
 
+    // Iterate through works
     for (let i = 0; i < works.length; i++) {
         const work = works[i];
         if (filter === "Tous" || filter === work.category.name) {
-            // Tag creation for work
+            // 'figure' creation
             const workElement = document.createElement("figure");
             workElement.id = "portfolioWorkFigure_" + work.id
-            // Tags creation
+
+            // 'img' and 'figcaption' creation
             const imageElement = document.createElement("img");
             imageElement.src = work.imageUrl;
             const captionElement = document.createElement("figcaption");
             captionElement.innerText = work.title;
 
-            // Work Element added to Gallery
+            // Add work element to Gallery
             sectionGallery.appendChild(workElement);
             workElement.appendChild(imageElement);
             workElement.appendChild(captionElement);
