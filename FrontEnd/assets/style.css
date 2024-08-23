@@ -448,7 +448,7 @@ input[type="submit"] {
     font-size: 14px;
     font-weight: 500;
     margin: 30px 0 10px;
-    color:#3d3d3d;
+    color: #3d3d3d;
 }
 
 .login-form form input {
@@ -565,13 +565,13 @@ html {
     margin: 0 auto 70px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: left;
     flex-wrap: wrap;
     column-gap: 10px;
-    row-gap: 30px;
+    row-gap: 10px;
 }
 
-.modal-portfolio figure {
+.modal-portfolio div {
     width: 18%;
 }
 
@@ -590,7 +590,7 @@ html {
     font-size: 14px;
     font-weight: 500;
     margin: 30px 0 10px;
-    color:#3d3d3d;
+    color: #3d3d3d;
 }
 
 .modal-addPhoto form input[type="submit"] {
@@ -633,8 +633,8 @@ html {
     border-radius: 2px;
     border: none;
     position: relative;
-    left: 70%;
     top: -80%;
+    left: 70%; 
     background-color: black;
     z-index: 1;
     cursor: pointer;
@@ -649,22 +649,26 @@ html {
 
 .modal-imagePicker {
     width: 420px;
+    max-height: 170px;
     background-color: #e8f1f6;
     border-radius: 3px;
-    padding: 15px 0;
     margin-bottom: 30px;
     margin: auto;
+}
+
+.modal-setImage {
+    padding: 15px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
 }
-.modal-imagePicker img {
+.modal-setImage img {
     width: 76px;
 }
 
-.modal-imagePicker button {
+.modal-setImage button {
     font-family: "Work Sans";
     font-weight: 500;
     font-size: 14px;
@@ -677,13 +681,13 @@ html {
     border: none;
 }
 
-.modal-imagePicker p {
+.modal-setImage p {
     font-family: "Work Sans";
     font-weight: 400;
     font-size: 10px;
 }
 
-.modal-imagePicker input[type="file"]::file-selector-button {
+.modal-setImage input[type="file"]::file-selector-button {
     font-family: "Work Sans";
     font-weight: 500;
     font-size: 14px;
@@ -694,6 +698,16 @@ html {
     background-color: #cbd6dc;
     border-radius: 60px;
     border: none;
+}
+
+.modal-displayImage {
+    display: none;
+    justify-content: center;
+}
+
+.modal-displayImage img {
+    max-width: 420px;
+    max-height: 170px;
 }
 
 .modal-addForm {
@@ -701,16 +715,15 @@ html {
     margin: auto;
 }
 
-.modal-addForm input, select {
+.modal-addForm input,
+select {
     box-shadow: 0px 4px 14px 0px #00000017;
     height: 50px;
     border: none;
     padding: 0 10px;
-    color:#444444;
+    color: #444444;
     box-shadow: 0px 4px 14px 0px #00000017;
 }
-
-
 
 .modal-line {
     width: 400px;
@@ -720,22 +733,18 @@ html {
     justify-content: center;
 }
 
-.modal-addForm form input[type="submit"]
-{
-    margin: 30px auto 0;
-    width:240px;
-    color:white;
-
+.modal-addForm form input[type="submit"] {
+    margin: 0 auto 0;
+    width: 240px;
+    color: white;
 }
 
-.modal-addForm form input[type="submit"]:disabled
-{
-    background-color: #A7A7A7;
+.modal-addForm form input[type="submit"]:disabled {
+    background-color: #a7a7a7;
 }
 
-.modal-addForm form input[type="submit"]:enabled
-{
-    background-color: #1D6154;
+.modal-addForm form input[type="submit"]:enabled {
+    background-color: #1d6154;
 }
 
 @keyframes fadeIn {

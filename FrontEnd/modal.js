@@ -38,9 +38,8 @@ const openModal = async function (e) {
     modal.querySelector(".modal-btnAddPhoto").addEventListener("click", () => {
         document.querySelector(".modal-galery").style.display = "none";
         document.querySelector(".modal-addPhoto").style.display = "block";
-        document.getElementById("selectedImage").src = "assets/icons/picture.svg"
-        document.getElementById("addImage").style.display = "block"
-        document.getElementById("addImageNote").style.display = "block"
+        document.querySelector(".modal-setImage").style.display = "flex";
+        document.querySelector(".modal-displayImage").style.display = "none";
     });
 
     // Button 'Back' click event
@@ -154,11 +153,11 @@ async function populateWorks() {
 
     for (let i = 0; i < works.length; i++) {
         const work = works[i];
-        // Tag creation for work
-        const workElement = document.createElement("figure");
+        // 'Figure'' creation for work
+        const workElement = document.createElement("div");
         workElement.id = "deleteWorkFigure_" + work.id;
 
-        // Tags creation
+        // Tags creation ('img', 'button', 'i')
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         const trashButton = document.createElement("button");
@@ -200,50 +199,51 @@ async function populateWorks() {
     }
 }
 
-const formNewWork = document.getElementById("formNewWork")
+const formNewWork = document.getElementById("formNewWork");
 formNewWork.addEventListener("submit", async function (event) {
     // Prevent submit default action
     event.preventDefault();
 
-    formData = await checkNewWorkData()
-    console.log("formdata", formData)
+    formData = await checkNewWorkData();
+    console.log("formdata", formData);
 
     const loginToken = window.localStorage.getItem("loginToken");
 
     const response = await fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {
-            "accept": "application/json",
-            "Authorization": "Bearer " + loginToken,
+            accept: "application/json",
+            Authorization: "Bearer " + loginToken,
         },
-        body: formData
-    })
-
-    // REPRENDRE ICI
-    console.log(response)
-})
+        body: formData,
+    });
+    if (response.ok) {
+        console.log("Ajouté");
+        modal.querySelector(".js-modal-close").click();
+        location.reload();
+    }
+});
 
 function triggerInputFile() {
-    document.getElementById("inputFile").click()
+    document.getElementById("inputFile").click();
 }
 
 async function checkNewWorkData() {
     // Get data from DOM
-    const image = document.getElementById("inputFile").files[0]
+    const image = document.getElementById("inputFile").files[0];
     // Display image in 'img'
-    document.getElementById("selectedImage").src = URL.createObjectURL(image)
-    document.getElementById("addImage").style.display="none"
-    document.getElementById("addImageNote").style.display="none"
+    document.getElementById("selectedImage").src = URL.createObjectURL(image);
+    document.querySelector(".modal-setImage").style.display = "none";
+    document.querySelector(".modal-displayImage").style.display = "flex";
 
-
-    const title = document.getElementById("title").value
-    const categoryName = document.getElementById("listCategories").value
-    let categoryId = 0
+    const title = document.getElementById("title").value;
+    const categoryName = document.getElementById("listCategories").value;
+    let categoryId = 0;
 
     // Build 'FormData' from data
-    const formData = new FormData()
-    formData.append("image", image)
-    formData.append("title", title)
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", title);
 
     // Convert category name to category id with API fetch
     const responseCategories = await fetch(
@@ -253,18 +253,15 @@ async function checkNewWorkData() {
 
     categories.forEach((category) => {
         if (category.name === categoryName) {
-            categoryId = parseInt(category.id)
-
+            categoryId = parseInt(category.id);
         }
-    })
-    formData.append("category", categoryId)
+    });
+    formData.append("category", categoryId);
 
     if (image && title && categoryName) {
-        document.getElementById("btnSubmitAddNewWork").disabled = false
-        return formData
-    }
-    else {
-        document.getElementById("btnSubmitAddNewWork").disabled = true
+        document.getElementById("btnSubmitAddNewWork").disabled = false;
+        return formData;
+    } else {
+        document.getElementById("btnSubmitAddNewWork").disabled = true;
     }
 }
-
