@@ -1,24 +1,47 @@
-let modal = null;
-const focusableSelector = "button, a, input, textarea";
-let focusables = [];
-let previouslyFocusedElement = null;
+import { createWorkFigure } from "./works.js"
 
-// ---------------------------------------------
-// OPEN MODAL
-// ---------------------------------------------
-const openModal = async function (e) {
-    e.preventDefault();
-    const target = e.target.getAttribute("href");
-    if (target.startsWith("#")) {
-        modal = document.querySelector(e.target.getAttribute("href"));
-    } else {
-        modal = await loadModal(target);
-    }
+setEventListener()
 
-    focusables = Array.from(modal.querySelectorAll(focusableSelector));
-    previouslyFocusedElement = document.querySelector(":focus");
+function setEventListener() {
+    // Add image 'button' triggers 'input file'
+    document.getElementById("addImage").addEventListener("click", ()=>document.getElementById('inputFile').click())
+
+    // Data to be checked when image, title
+    document.getElementById("inputFile").addEventListener("change", checkNewWorkData)
+    document.getElementById("title").addEventListener("change", checkNewWorkData)
+    document.getElementById("listCategories").addEventListener("change", checkNewWorkData)
+}
+
+let modal = null
+
+/**
+ * POPULATE 'SELECT' CATEGORIES
+ * Function called from 'works.js'
+ * @param {Set} categoriesSet 
+ */
+export function populateModalSelect(categoriesSet) {
+    categoriesSet.forEach((categoryTuple) => {
+        const category = categoryTuple[0]
+        const id = categoryTuple[1]
+        if (category !== "Tous") {
+            const option = document.createElement("option");
+            option.value = id;
+            option.text = category;
+            document.getElementById("listCategories").appendChild(option);
+        }
+    });
+}
+
+/**
+ * OPEN MODAL
+ * @param {event} event 
+ */
+const openModal = async function (event) {
+    event.preventDefault();
+
+    // Show Modal
+    modal = document.querySelector(event.target.getAttribute("href"));
     modal.style.display = null;
-    focusables[0].focus();
     modal.removeAttribute("aria-hidden");
     modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal);
@@ -50,42 +73,30 @@ const openModal = async function (e) {
         document.querySelector(".modal-galery").style.display = "block";
         document.querySelector(".modal-addPhoto").style.display = "none";
     });
-
-    // Get categories from API
-    const reponseCategories = await fetch(
-        "http://localhost:5678/api/categories"
-    );
-    const categories = await reponseCategories.json();
-    // Set all categories (avoiding double values)
-    const categoriesSet = new Set();
-    for (let i = 0; i < categories.length; i++) {
-        categoriesSet.add(categories[i].name);
-    }
-    // Add 'options' to the 'select'
-    categoriesSet.forEach((category, index) => {
-        const option = document.createElement("option");
-        option.value = index;
-        option.text = category;
-        document.getElementById("listCategories").appendChild(option);
-    });
-
-    const works = populateWorks("Tous");
 };
+
+// Modal to be opened on each '.js-modal' click
+document.querySelectorAll(".js-modal").forEach((a) => {
+    a.addEventListener("click", openModal);
+});
+
 
 // ---------------------------------------------
 // DISPLAY FIRST PAGE
 // ---------------------------------------------
-const displayFirstPage = function (e) {
-    document.querySelector(".modal-addPhoto").style.display = "none";
-};
+// const displayFirstPage = function (e) {
+//     document.querySelector(".modal-addPhoto").style.display = "none";
+// };
 
-// ---------------------------------------------
-// CLOSE MODAL
-// ---------------------------------------------
-const closeModal = function (e) {
+
+/**
+ * CLOSE MODAL
+ * @param {event} e 
+ * @returns 
+ */
+const closeModal = function (event) {
     if (modal === null) return;
-    if (previouslyFocusedElement !== null) previouslyFocusedElement.focus();
-    e.preventDefault();
+    event.preventDefault();
     window.setTimeout(function () {
         modal.style.display = "none";
         modal = null;
@@ -101,76 +112,30 @@ const closeModal = function (e) {
         .removeEventListener("click", stopPropagation);
 };
 
-// ---------------------------------------------
-// STOP PROPAGATION
-// ---------------------------------------------
-const stopPropagation = function (e) {
-    e.stopPropagation();
+/**
+ * STOP PROPAGATION
+ * @param {event} event 
+ */
+const stopPropagation = function (event) {
+    event.stopPropagation();
 };
 
-// ---------------------------------------------
-// FOCUS IN MODAL
-// ---------------------------------------------
-const focusInModal = function (e) {
-    e.preventDefault();
-    let index = focusables.findIndex(
-        (f) => f === modal.querySelector(":focus")
-    );
-    if (e.shiftKey === true) {
-        index--;
-    } else {
-        index++;
-    }
-    if (index >= focusables.length) {
-        index = 0;
-    }
-    if (index < 0) {
-        index = focusables.length - 1;
-    }
-    focusables[index].focus();
-};
-
-// ---------------------------------------------
-// LOAD MODAL
-// ---------------------------------------------
-const loadModal = async function (url) {
-    const target = "#" + url.split("#")[1];
-    const existingModal = document.querySelector(target);
-    if (existingModal !== null) return existingModal;
-    const html = await fetch(url).then((response) => response.text());
-    const element = document
-        .createRange()
-        .createContextualFragment(html)
-        .querySelector(target);
-    if (element === null)
-        throw `L'élément ${target} n'a pas été trouvé dans la page ${url}`;
-    document.body.append(element);
-    return element;
-};
-
-document.querySelectorAll(".js-modal").forEach((a) => {
-    a.addEventListener("click", openModal);
-});
-
-// ---------------------------------------------
-// KEYBOARD EVENT
-// ---------------------------------------------
-window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e);
-    }
-    if (e.key === "Tab" && modal !== null) {
-        focusInModal(e);
+/**
+ * KEYBOARD EVENT (close modal when ESC is pressed)
+ */
+window.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" || event.key === "Esc") {
+        closeModal(event);
     }
 });
 
-// ---------------------------------------------
-// FILL PORTFOLIO
-// ---------------------------------------------
-async function populateWorks() {
-    // Get data from API
-    const reponseWorks = await fetch("http://localhost:5678/api/works");
-    const works = await reponseWorks.json();
+
+/**
+ * POPULATE PORTFOLIO
+ * Function called from 'works.js'
+ * @param {json} works 
+ */
+export async function populateModalWorks(works) {
     // Get DOM element hosting works
     const modalPortfolio = document.querySelector(".modal-portfolio");
     modalPortfolio.innerHTML = "";
@@ -191,30 +156,7 @@ async function populateWorks() {
         iconElement.name = work.id;
         iconElement.className = "fa-solid fa-trash-can fa-xs";
         trashButton.appendChild(iconElement);
-        trashButton.addEventListener("click", async function (event) {
-            // Delete data with API
-            const responseDelete = await fetch(
-                "http://localhost:5678/api/works/" + event.target.name,
-                {
-                    method: "DELETE",
-                    headers: {
-                        Authorization:
-                            "Bearer " +
-                            window.localStorage.getItem("loginToken"),
-                    },
-                }
-            );
-            if (responseDelete.ok) {
-                const idToDelete = event.target.name;
-                console.log("L'id N° " + idToDelete + " a été supprimé");
-                document.getElementById(
-                    "deleteWorkFigure_" + idToDelete
-                ).style.display = "none";
-                document.getElementById(
-                    "portfolioWorkFigure_" + idToDelete
-                ).style.display = "none";
-            }
-        });
+        trashButton.addEventListener("click", (event) => deleteWork(event));
 
         // Add work Element to Gallery
         modalPortfolio.appendChild(workElement);
@@ -223,78 +165,118 @@ async function populateWorks() {
     }
 }
 
-// ---------------------------------------------
-// SUBMIT EVENT (ADD WORK TO DB)
-// ---------------------------------------------
+/**
+ * DELETE WORK
+ * @param {event} event 
+ */
+async function deleteWork(event) {
+    try {
+        // Delete data with API
+        const responseDelete = await fetch(
+            "http://localhost:5678/api/works/" + event.target.name,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization:
+                        "Bearer " +
+                        window.localStorage.getItem("loginToken"),
+                },
+            }
+        );
+        if (!responseDelete.ok) {
+            throw new Error(`Une erreur s'est produite lors de la suppression d'un élément (${response.status}). Veuillez réessayer plus tard.`)
+        }
+        const idToDelete = event.target.name;
+
+        document.getElementById(
+            "deleteWorkFigure_" + idToDelete
+        ).remove();
+        document.getElementById(
+            "portfolioWorkFigure_" + idToDelete
+        ).remove();
+    }
+    catch (error) {
+        alert(error)
+    }
+}
+
+
+/**
+ * SUBMIT EVENT (ADD WORK TO DB WITH 'POST')
+ */
 const formNewWork = document.getElementById("formNewWork");
 formNewWork.addEventListener("submit", async function (event) {
     // Prevent submit default action
     event.preventDefault();
 
-    formData = await checkNewWorkData();
-    console.log("formdata", formData);
+    // Check datas and retrieve them if check OK
+    const formData = await checkNewWorkData();
 
-    const loginToken = window.localStorage.getItem("loginToken");
+    // Get Token for POST operation
+    const loginToken = localStorage.getItem("loginToken");
 
-    const response = await fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-            accept: "application/json",
-            Authorization: "Bearer " + loginToken,
-        },
-        body: formData,
-    });
-    if (response.ok) {
-        console.log("Ajouté");
+    try {
+        const response = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                accept: "application/json",
+                Authorization: "Bearer " + loginToken,
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Une erreur s'est produite lors de l'ajout d'un élément (${response.status}). Veuillez réessayer plus tard.`)
+        }
+
+        // Convert response to json object
+        const work = await response.json()
+
+        // Convert json object to work 'figure' (imported from 'works.js')
+        const workFigure = createWorkFigure(work)
+
+        // Add work 'figure' to gallery (to avoid page reload)
+        document.querySelector(".gallery").appendChild(workFigure)
+
+        // Close modal
         modal.querySelector(".js-modal-close").click();
-        location.reload();
+
+    }
+    catch (error) {
+        alert(error)
     }
 });
 
-// ---------------------------------------------
-// TRIGGER INPUT FILE
-// ---------------------------------------------
-function triggerInputFile() {
-    document.getElementById("inputFile").click();
-}
-
-// ---------------------------------------------
-// CHECK WORK DATA
-// ---------------------------------------------
+/**
+ * CHECK WORK DATA
+ * @returns formData
+ */
 async function checkNewWorkData() {
-    // Get data from DOM
-    const image = document.getElementById("inputFile").files[0];
-    // Display image in 'img'
-    document.getElementById("selectedImage").src = URL.createObjectURL(image);
-    document.querySelector(".modal-setImage").style.display = "none";
-    document.querySelector(".modal-displayImage").style.display = "flex";
-
+    // Get file data from DOM
     const title = document.getElementById("title").value;
-    const categoryName = document.getElementById("listCategories").value;
-    let categoryId = 0;
+    const categoryId = document.getElementById("listCategories").value;
+    const image = document.getElementById("inputFile").files[0]
 
-    // Build 'FormData' from data
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("title", title);
+    // Display image in 'img' and hide image selection div (if image is defined)
+    if (image) {
+        document.getElementById("selectedImage").src = URL.createObjectURL(image)
+        document.querySelector(".modal-setImage").style.display = "none";
+        document.querySelector(".modal-displayImage").style.display = "flex";
+    }
 
-    // Convert category name to category id with API fetch
-    const responseCategories = await fetch(
-        "http://localhost:5678/api/categories"
-    );
-    const categories = await responseCategories.json();
+    // Check the 3 elements needed
+    if (image && title && categoryId) {
+        // Build 'FormData' from data
+        const formData = new FormData();
+        formData.append("image", image);
+        formData.append("title", title);
+        formData.append("category", parseInt(categoryId));
 
-    categories.forEach((category) => {
-        if (category.name === categoryName) {
-            categoryId = parseInt(category.id);
-        }
-    });
-    formData.append("category", categoryId);
-
-    if (image && title && categoryName) {
+        // Enable submit button
         document.getElementById("btnSubmitAddNewWork").disabled = false;
         return formData;
     } else {
+        // Disable submit button
         document.getElementById("btnSubmitAddNewWork").disabled = true;
     }
 }

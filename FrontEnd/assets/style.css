@@ -174,7 +174,7 @@ h1 {
     color: #b1663c;
 }
 
-h1 > span {
+h1>span {
     font-family: "Work Sans";
     font-size: 10px;
     letter-spacing: 0.05em;
@@ -204,7 +204,7 @@ h2 {
 }
 
 .header-logo-nav a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .header-logo-nav li {
@@ -336,6 +336,7 @@ li:hover {
 /* =========================================== */
 /* FILTER BAR */
 /* =========================================== */
+
 .filter-bar {
     display: flex;
     flex-direction: row;
@@ -378,6 +379,7 @@ li:hover {
 /* =========================================== */
 /* PHOTO GALLERY */
 /* =========================================== */
+
 .gallery {
     width: 100%;
     display: grid;
@@ -394,12 +396,13 @@ li:hover {
 /* =========================================== */
 /* CONTACT */
 /* =========================================== */
+
 #contact {
     width: 50%;
     margin: auto;
 }
 
-#contact > * {
+#contact>* {
     text-align: center;
 }
 
@@ -443,6 +446,7 @@ input[type="submit"] {
 /* =========================================== */
 /* LOGIN FORM */
 /* =========================================== */
+
 .login-form {
     margin: 200px auto;
     width: 380px;
@@ -668,6 +672,7 @@ input[type="submit"] {
     justify-content: space-between;
     gap: 10px;
 }
+
 .modal-setImage img {
     width: 76px;
 }
@@ -721,12 +726,19 @@ input[type="submit"] {
 
 .modal-addForm input,
 select {
-    box-shadow: 0px 4px 14px 0px #00000017;
     height: 50px;
     border: none;
     padding: 0 10px;
     color: #444444;
     box-shadow: 0px 4px 14px 0px #00000017;
+}
+
+.modal-addForm #listCategories {
+    /* Arrow */
+    appearance: none;
+    background-image: url("../assets/icons/chevron-down.png");
+    background-repeat: no-repeat;
+    background-position: right 40px top 50%;
 }
 
 .modal-line {

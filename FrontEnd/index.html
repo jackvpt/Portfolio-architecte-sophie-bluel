@@ -14,8 +14,8 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="works.js"></script>
-	<script src="modal.js" defer></script>
+	<script type="module" src="works.js" defer></script>
+	<script type="module" src="modal.js" defer></script>
 </head>
 
 <body>
@@ -132,8 +132,8 @@
 						<div class="modal-imagePicker">
 							<div class="modal-setImage">
 								<img src="assets/icons/picture.svg" alt="image icon">
-								<button id="addImage" onclick="triggerInputFile()">+ Ajouter photo</button>
-								<input id="inputFile" type="file" style="display:none" onchange="checkNewWorkData()">
+								<button id="addImage">+ Ajouter photo</button>
+								<input id="inputFile" type="file" style="display:none">
 								<p>jpg, png : 4 mo max</p>
 							</div>
 							<div class="modal-displayImage">
@@ -143,9 +143,10 @@
 						<div class="modal-addForm">
 							<form id="formNewWork" action="#" method="post">
 								<label for="title">Titre</label>
-								<input type="text" id="title" name="title" onchange="checkNewWorkData()" required>
+								<input type="text" id="title" name="title" required>
 								<label for="listCategories">Catégorie</label>
-								<select id="listCategories" name="category" onchange="checkNewWorkData()">
+								<select id="listCategories" name="category">
+									<span><i class="fa fa-2xl fa-times"></i></span>
 									<!-- Elements added dynamically -->
 								</select>
 								<div class="modal-line"></div>
