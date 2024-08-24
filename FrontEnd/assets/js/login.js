@@ -43,5 +43,3 @@ async function login(event) {
     }
 };
 
-console.log('fdfsd :>> ', fdfsd);
-

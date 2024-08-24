@@ -4,7 +4,7 @@ setEventListener()
 
 function setEventListener() {
     // Add image 'button' triggers 'input file'
-    document.getElementById("addImage").addEventListener("click", ()=>document.getElementById('inputFile').click())
+    document.getElementById("addImage").addEventListener("click", () => document.getElementById('inputFile').click())
 
     // Data to be checked when image, title
     document.getElementById("inputFile").addEventListener("change", checkNewWorkData)
@@ -75,19 +75,10 @@ const openModal = async function (event) {
     });
 };
 
-// Modal to be opened on each '.js-modal' click
+// Modal to be opened on each '.js-modal' class
 document.querySelectorAll(".js-modal").forEach((a) => {
     a.addEventListener("click", openModal);
 });
-
-
-// ---------------------------------------------
-// DISPLAY FIRST PAGE
-// ---------------------------------------------
-// const displayFirstPage = function (e) {
-//     document.querySelector(".modal-addPhoto").style.display = "none";
-// };
-
 
 /**
  * CLOSE MODAL
@@ -142,27 +133,33 @@ export async function populateModalWorks(works) {
 
     for (let i = 0; i < works.length; i++) {
         const work = works[i];
-        // 'Figure'' creation for work
-        const workElement = document.createElement("div");
-        workElement.id = "deleteWorkFigure_" + work.id;
-
-        // Tags creation ('img', 'button', 'i')
-        const imageElement = document.createElement("img");
-        imageElement.src = work.imageUrl;
-        const trashButton = document.createElement("button");
-        trashButton.name = work.id;
-        trashButton.className = "modal-button-trash";
-        const iconElement = document.createElement("i");
-        iconElement.name = work.id;
-        iconElement.className = "fa-solid fa-trash-can fa-xs";
-        trashButton.appendChild(iconElement);
-        trashButton.addEventListener("click", (event) => deleteWork(event));
+        const workElement = createWorkDiv(work)
 
         // Add work Element to Gallery
         modalPortfolio.appendChild(workElement);
-        workElement.appendChild(imageElement);
-        workElement.appendChild(trashButton);
     }
+}
+
+function createWorkDiv(work) {
+    // 'div' creation for work
+    const workElement = document.createElement("div");
+    workElement.id = "deleteWorkFigure_" + work.id;
+
+    // Tags creation ('img', 'button', 'i')
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    const trashButton = document.createElement("button");
+    trashButton.name = work.id;
+    trashButton.className = "modal-button-trash";
+    const iconElement = document.createElement("i");
+    iconElement.name = work.id;
+    iconElement.className = "fa-solid fa-trash-can fa-xs";
+    trashButton.appendChild(iconElement);
+    trashButton.addEventListener("click", (event) => deleteWork(event));
+    workElement.appendChild(imageElement);
+    workElement.appendChild(trashButton);
+
+    return workElement
 }
 
 /**
@@ -232,15 +229,20 @@ formNewWork.addEventListener("submit", async function (event) {
         // Convert response to json object
         const work = await response.json()
 
-        // Convert json object to work 'figure' (imported from 'works.js')
+        // Create work 'figure' (imported from 'works.js')
         const workFigure = createWorkFigure(work)
 
         // Add work 'figure' to gallery (to avoid page reload)
         document.querySelector(".gallery").appendChild(workFigure)
 
+        // Create work 'div' 
+        const workDiv = createWorkDiv(work)
+
+        // Add work 'div' to modal portfolio
+        document.querySelector(".modal-portfolio").appendChild(workDiv)
+
         // Close modal
         modal.querySelector(".js-modal-close").click();
-
     }
     catch (error) {
         alert(error)
