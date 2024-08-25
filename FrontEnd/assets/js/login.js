@@ -27,7 +27,8 @@ async function login(event) {
         // Check email / password
         if (!response.ok) {
             document.querySelector(".invalid-user").style.visibility = "visible"
-            throw new Error(`Les informations utilisateur / mot de passe ne sont pas correctes (${response.status}).`)
+            // throw new Error(`Erreur dans l'identifiant ou le mot de passe (${response.status}).`)
+            return
         }
 
         const responseMessage = await response.json() 
