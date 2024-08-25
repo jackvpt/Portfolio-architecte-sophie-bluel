@@ -204,7 +204,8 @@ h2 {
 }
 
 .header-logo-nav a {
-    text-decoration: none !important;
+    text-decoration: none;
+    color: black;
 }
 
 .header-logo-nav li {
@@ -533,7 +534,7 @@ input[type="submit"] {
     animation: slideFromTop 0.3s both;
 }
 
-.modal-wrapper h1 {
+.modal-wrapper h2 {
     font-family: "Work Sans";
     font-size: 26px;
     font-weight: 400;
@@ -624,13 +625,6 @@ input[type="submit"] {
     font-weight: 500;
     margin: 30px 0 10px;
     color: #3d3d3d;
-}
-
-.modal-addPhoto form input[type="submit"] {
-    width: 180px;
-    height: 36px;
-    margin-top: 10px;
-    cursor: pointer;
 }
 
 .modal-bottom-button {
@@ -736,7 +730,7 @@ select {
 .modal-addForm #listCategories {
     /* Arrow */
     appearance: none;
-    background-image: url("../assets/icons/chevron-down.png");
+    background-image: url("./../icons/chevron-down.png");
     background-repeat: no-repeat;
     background-position: right 40px top 50%;
 }
@@ -753,10 +747,14 @@ select {
     margin: 0 auto 0;
     width: 240px;
     color: white;
+    height: 36px;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 .modal-addForm form input[type="submit"]:disabled {
     background-color: #a7a7a7;
+    cursor: not-allowed;
 }
 
 .modal-addForm form input[type="submit"]:enabled {

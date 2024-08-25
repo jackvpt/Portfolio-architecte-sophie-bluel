@@ -8,7 +8,7 @@ let filter = "Tous"
 document.addEventListener("DOMContentLoaded", ready)
 
 function ready() {
-    setEventListener()
+    setEventListeners()
     checkLogin()
     populateFilterBar()
     populateWorks(filter)
@@ -17,7 +17,7 @@ function ready() {
 /**
  * EVENT LISTENERS
  */
-function setEventListener() {
+function setEventListeners() {
     document.getElementById("anchor-login-logout").addEventListener("click", loginLogout)
 }
 
@@ -33,7 +33,6 @@ function loginLogout() {
         location.replace("login.html")
     }
 }
-
 
 /**
  * CHECK TOKEN AND TOGGLE MODE
@@ -54,7 +53,6 @@ function checkLogin() {
     }
 }
 
-
 /**
  * POPULATE FILTER BAR
  */
@@ -63,12 +61,12 @@ async function populateFilterBar() {
     try {
         const responseCategories = await fetch(
             "http://localhost:5678/api/categories"
-        );
+        ) 
 
         if (!responseCategories.ok) {
             throw new Error(`Une erreur s'est produite (${responseCategories.status}). Veuillez réessayer plus tard.`)
         }
-        const categories = await responseCategories.json();
+        const categories = await responseCategories.json() 
 
         // Set all categories (avoiding double values)
         const categoriesSet = new Set()
@@ -82,29 +80,29 @@ async function populateFilterBar() {
         populateModalSelect(categoriesSet)
 
         // Get DOM element hosting filter bar
-        const filterBar = document.querySelector(".filter-bar");
+        const filterBar = document.querySelector(".filter-bar") 
         filterBar.innerHTML = ""
 
         for (let categoryTuple of categoriesSet) {
             const category = categoryTuple[0]
             // Button creation
-            const filterBarButton = document.createElement("button");
+            const filterBarButton = document.createElement("button") 
             filterBarButton.textContent = category
 
             // Make button active if its category is equal to filter
             if (category === filter) {
-                filterBarButton.classList.add("button-active");
+                filterBarButton.classList.add("button-active")
             }
 
             // Filter click event
             filterBarButton.addEventListener("click", function () {
-                filter = category;
+                filter = category 
                 populateFilterBar(categories)
                 populateWorks(filter)
-            });
+            }) 
 
             // Add Button to Filter Bar
-            filterBar.appendChild(filterBarButton);
+            filterBar.appendChild(filterBarButton)
         }
     }
     catch (error) {
@@ -118,7 +116,7 @@ async function populateFilterBar() {
  */
 async function populateWorks(filter) {
     // Get data from API
-    const reponseWorks = await fetch("http://localhost:5678/api/works");
+    const reponseWorks = await fetch("http://localhost:5678/api/works") 
     const works = await reponseWorks.json()
 
     // Get DOM element hosting works
@@ -130,7 +128,7 @@ async function populateWorks(filter) {
 
     // Iterate through works to display only filtered works
     for (let i = 0; i < works.length; i++) {
-        const work = works[i];
+        const work = works[i] 
         if (filter === "Tous" || filter === work.category.name) {
             // Add work element to Gallery
             const workFigure = createWorkFigure(work)
@@ -152,6 +150,7 @@ export function createWorkFigure(work) {
     // 'img' and 'figcaption' creation
     const imageElement = document.createElement("img")
     imageElement.src = work.imageUrl
+    imageElement.alt = work.title
     const captionElement = document.createElement("figcaption")
     captionElement.innerText = work.title
 
@@ -160,3 +159,4 @@ export function createWorkFigure(work) {
 
     return workElement
 }
+

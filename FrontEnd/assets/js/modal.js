@@ -1,8 +1,8 @@
 import { createWorkFigure } from "./works.js"
 
-setEventListener()
+setEventListeners()
 
-function setEventListener() {
+function setEventListeners() {
     // Add image 'button' triggers 'input file'
     document.getElementById("addImage").addEventListener("click", () => document.getElementById('inputFile').click())
 
@@ -24,12 +24,12 @@ export function populateModalSelect(categoriesSet) {
         const category = categoryTuple[0]
         const id = categoryTuple[1]
         if (category !== "Tous") {
-            const option = document.createElement("option");
-            option.value = id;
-            option.text = category;
-            document.getElementById("listCategories").appendChild(option);
+            const option = document.createElement("option")
+            option.value = id
+            option.text = category
+            document.getElementById("listCategories").appendChild(option)
         }
-    });
+    })
 }
 
 /**
@@ -37,48 +37,51 @@ export function populateModalSelect(categoriesSet) {
  * @param {event} event 
  */
 const openModal = async function (event) {
-    event.preventDefault();
+    event.preventDefault()
 
     // Show Modal
-    modal = document.querySelector(event.target.getAttribute("href"));
-    modal.style.display = null;
-    modal.removeAttribute("aria-hidden");
-    modal.setAttribute("aria-modal", "true");
-    modal.addEventListener("click", closeModal);
+    modal = document.querySelector(event.target.getAttribute("href"))
+    modal.style.display = null
+    modal.removeAttribute("aria-hidden")
+    modal.setAttribute("aria-modal", "true")
+    modal.addEventListener("click", closeModal)
 
     // Get all close buttons
-    const allCloseButtons = modal.querySelectorAll(".js-modal-close");
+    const allCloseButtons = modal.querySelectorAll(".js-modal-close")
     allCloseButtons.forEach((closeButton) =>
         closeButton.addEventListener("click", closeModal)
-    );
+    )
 
     modal
         .querySelector(".js-modal-stop")
-        .addEventListener("click", stopPropagation);
+        .addEventListener("click", stopPropagation)
 
     // Default display
-    document.querySelector(".modal-galery").style.display = "block";
-    document.querySelector(".modal-addPhoto").style.display = "none";
+    document.querySelector(".modal-galery").style.display = "block"
+    document.querySelector(".modal-addPhoto").style.display = "none"
 
     // Button 'Add photo' click event
     modal.querySelector(".modal-btnAddPhoto").addEventListener("click", () => {
-        document.querySelector(".modal-galery").style.display = "none";
-        document.querySelector(".modal-addPhoto").style.display = "block";
-        document.querySelector(".modal-setImage").style.display = "flex";
-        document.querySelector(".modal-displayImage").style.display = "none";
-    });
+        document.querySelector(".modal-galery").style.display = "none"
+        document.querySelector(".modal-addPhoto").style.display = "block"
+        document.querySelector(".modal-setImage").style.display = "flex"
+        document.querySelector(".modal-displayImage").style.display = "none"
+        document.getElementById("inputFile").value = null
+        document.getElementById("title").value = ""
+        document.getElementById("btnSubmitAddNewWork").disabled = true
+    })
 
     // Button 'Back' click event
     modal.querySelector(".js-modal-back").addEventListener("click", () => {
-        document.querySelector(".modal-galery").style.display = "block";
-        document.querySelector(".modal-addPhoto").style.display = "none";
-    });
-};
+        document.querySelector(".modal-galery").style.display = "block"
+        document.querySelector(".modal-addPhoto").style.display = "none"
+    })
+}
 
 // Modal to be opened on each '.js-modal' class
 document.querySelectorAll(".js-modal").forEach((a) => {
-    a.addEventListener("click", openModal);
-});
+    a.addEventListener("click", openModal)
+})
 
 /**
  * CLOSE MODAL
@@ -86,39 +89,39 @@ document.querySelectorAll(".js-modal").forEach((a) => {
  * @returns 
  */
 const closeModal = function (event) {
-    if (modal === null) return;
-    event.preventDefault();
+    if (modal === null) return
+    event.preventDefault()
     window.setTimeout(function () {
-        modal.style.display = "none";
-        modal = null;
-    }, 500);
-    modal.setAttribute("aria-hidden", "true");
-    modal.removeAttribute("aria-modal");
-    modal.removeEventListener("click", closeModal);
+        modal.style.display = "none"
+        modal = null
+    }, 500)
+    modal.setAttribute("aria-hidden", "true")
+    modal.removeAttribute("aria-modal")
+    modal.removeEventListener("click", closeModal)
     modal
         .querySelector(".js-modal-close")
-        .removeEventListener("click", closeModal);
+        .removeEventListener("click", closeModal)
     modal
         .querySelector(".js-modal-stop")
-        .removeEventListener("click", stopPropagation);
-};
+        .removeEventListener("click", stopPropagation)
+}
 
 /**
  * STOP PROPAGATION
  * @param {event} event 
  */
 const stopPropagation = function (event) {
-    event.stopPropagation();
-};
+    event.stopPropagation()
+}
 
 /**
  * KEYBOARD EVENT (close modal when ESC is pressed)
  */
 window.addEventListener("keydown", function (event) {
     if (event.key === "Escape" || event.key === "Esc") {
-        closeModal(event);
+        closeModal(event)
     }
-});
+})
 
 
 /**
@@ -128,36 +131,37 @@ window.addEventListener("keydown", function (event) {
  */
 export async function populateModalWorks(works) {
     // Get DOM element hosting works
-    const modalPortfolio = document.querySelector(".modal-portfolio");
-    modalPortfolio.innerHTML = "";
+    const modalPortfolio = document.querySelector(".modal-portfolio")
+    modalPortfolio.innerHTML = ""
 
     for (let i = 0; i < works.length; i++) {
-        const work = works[i];
+        const work = works[i]
         const workElement = createWorkDiv(work)
 
         // Add work Element to Gallery
-        modalPortfolio.appendChild(workElement);
+        modalPortfolio.appendChild(workElement)
     }
 }
 
 function createWorkDiv(work) {
     // 'div' creation for work
-    const workElement = document.createElement("div");
-    workElement.id = "deleteWorkFigure_" + work.id;
+    const workElement = document.createElement("div")
+    workElement.id = "deleteWorkFigure_" + work.id
 
     // Tags creation ('img', 'button', 'i')
-    const imageElement = document.createElement("img");
-    imageElement.src = work.imageUrl;
-    const trashButton = document.createElement("button");
-    trashButton.name = work.id;
-    trashButton.className = "modal-button-trash";
-    const iconElement = document.createElement("i");
-    iconElement.name = work.id;
-    iconElement.className = "fa-solid fa-trash-can fa-xs";
-    trashButton.appendChild(iconElement);
-    trashButton.addEventListener("click", (event) => deleteWork(event));
-    workElement.appendChild(imageElement);
-    workElement.appendChild(trashButton);
+    const imageElement = document.createElement("img")
+    imageElement.src = work.imageUrl
+    imageElement.alt = work.title
+    const trashButton = document.createElement("button")
+    trashButton.name = work.id
+    trashButton.className = "modal-button-trash"
+    const iconElement = document.createElement("i")
+    iconElement.name = work.id
+    iconElement.className = "fa-solid fa-trash-can fa-xs"
+    trashButton.appendChild(iconElement)
+    trashButton.addEventListener("click", (event) => deleteWork(event))
+    workElement.appendChild(imageElement)
+    workElement.appendChild(trashButton)
 
     return workElement
 }
@@ -176,21 +180,21 @@ async function deleteWork(event) {
                 headers: {
                     Authorization:
                         "Bearer " +
-                        window.localStorage.getItem("loginToken"),
+                        localStorage.getItem("loginToken"),
                 },
             }
-        );
+        )
         if (!responseDelete.ok) {
             throw new Error(`Une erreur s'est produite lors de la suppression d'un élément (${response.status}). Veuillez réessayer plus tard.`)
         }
-        const idToDelete = event.target.name;
+        const idToDelete = event.target.name
 
         document.getElementById(
             "deleteWorkFigure_" + idToDelete
-        ).remove();
+        ).remove()
         document.getElementById(
             "portfolioWorkFigure_" + idToDelete
-        ).remove();
+        ).remove()
     }
     catch (error) {
         alert(error)
@@ -201,16 +205,16 @@ async function deleteWork(event) {
 /**
  * SUBMIT EVENT (ADD WORK TO DB WITH 'POST')
  */
-const formNewWork = document.getElementById("formNewWork");
+const formNewWork = document.getElementById("formNewWork")
 formNewWork.addEventListener("submit", async function (event) {
     // Prevent submit default action
-    event.preventDefault();
+    event.preventDefault()
 
     // Check datas and retrieve them if check OK
-    const formData = await checkNewWorkData();
+    const formData = await checkNewWorkData()
 
     // Get Token for POST operation
-    const loginToken = localStorage.getItem("loginToken");
+    const loginToken = localStorage.getItem("loginToken")
 
     try {
         const response = await fetch("http://localhost:5678/api/works", {
@@ -220,7 +224,7 @@ formNewWork.addEventListener("submit", async function (event) {
                 Authorization: "Bearer " + loginToken,
             },
             body: formData,
-        });
+        })
 
         if (!response.ok) {
             throw new Error(`Une erreur s'est produite lors de l'ajout d'un élément (${response.status}). Veuillez réessayer plus tard.`)
@@ -242,12 +246,12 @@ formNewWork.addEventListener("submit", async function (event) {
         document.querySelector(".modal-portfolio").appendChild(workDiv)
 
         // Close modal
-        modal.querySelector(".js-modal-close").click();
+        modal.querySelector(".js-modal-close").click()
     }
     catch (error) {
         alert(error)
     }
-});
+})
 
 /**
  * CHECK WORK DATA
@@ -255,30 +259,30 @@ formNewWork.addEventListener("submit", async function (event) {
  */
 async function checkNewWorkData() {
     // Get file data from DOM
-    const title = document.getElementById("title").value;
-    const categoryId = document.getElementById("listCategories").value;
+    const title = document.getElementById("title").value
+    const categoryId = document.getElementById("listCategories").value
     const image = document.getElementById("inputFile").files[0]
 
     // Display image in 'img' and hide image selection div (if image is defined)
     if (image) {
         document.getElementById("selectedImage").src = URL.createObjectURL(image)
-        document.querySelector(".modal-setImage").style.display = "none";
-        document.querySelector(".modal-displayImage").style.display = "flex";
+        document.querySelector(".modal-setImage").style.display = "none"
+        document.querySelector(".modal-displayImage").style.display = "flex"
     }
 
     // Check the 3 elements needed
     if (image && title && categoryId) {
         // Build 'FormData' from data
-        const formData = new FormData();
-        formData.append("image", image);
-        formData.append("title", title);
-        formData.append("category", parseInt(categoryId));
+        const formData = new FormData()
+        formData.append("image", image)
+        formData.append("title", title)
+        formData.append("category", parseInt(categoryId))
 
         // Enable submit button
-        document.getElementById("btnSubmitAddNewWork").disabled = false;
-        return formData;
+        document.getElementById("btnSubmitAddNewWork").disabled = false
+        return formData
     } else {
         // Disable submit button
-        document.getElementById("btnSubmitAddNewWork").disabled = true;
+        document.getElementById("btnSubmitAddNewWork").disabled = true
     }
 }
