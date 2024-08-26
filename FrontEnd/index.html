@@ -133,12 +133,15 @@
 							<div class="modal-setImage">
 								<img src="assets/icons/picture.svg" alt="image icon">
 								<button id="addImage">+ Ajouter photo</button>
-								<input id="inputFile" type="file" style="display:none">
+								<input id="inputFile" type="file" accept=".png, .jpg, .jpeg" style="display:none">
 								<p>jpg, png : 4 mo max</p>
 							</div>
 							<div class="modal-displayImage">
 								<img id="selectedImage" src="assets/icons/picture.svg" alt="work image">
 							</div>
+							<p class="invalid-image">Invalid image
+								<!-- Content set dynamically (warning for image type or size) -->
+							</p>
 						</div>
 						<div class="modal-addForm">
 							<form id="formNewWork" action="#" method="post">

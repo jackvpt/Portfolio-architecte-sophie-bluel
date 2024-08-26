@@ -592,16 +592,19 @@ input[type="submit"] {
         0 12px 30px 0 rgba(29, 97, 84, 0.19);
 }
 
+.modal-work {
+    position: relative;
+}
+
 .modal-button-trash {
+    position: absolute;
     width: 17px;
     height: 17px;
+    top: 5px;
+    right: 5px;
     border-radius: 2px;
     border: none;
-    position: relative;
-    top: -80%;
-    left: 70%;
     background-color: black;
-    z-index: 1;
     cursor: pointer;
     color: white;
     padding: 0;
@@ -711,6 +714,15 @@ input[type="submit"] {
 .modal-displayImage img {
     max-width: 420px;
     max-height: 170px;
+}
+
+.invalid-image {
+    margin: 5px 0;
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+    height: 15px;
 }
 
 .modal-addForm {

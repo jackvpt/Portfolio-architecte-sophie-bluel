@@ -66,6 +66,7 @@ const openModal = async function (event) {
         document.querySelector(".modal-addPhoto").style.display = "block"
         document.querySelector(".modal-setImage").style.display = "flex"
         document.querySelector(".modal-displayImage").style.display = "none"
+        document.querySelector(".invalid-image").style.display = "none"
         document.getElementById("inputFile").value = null
         document.getElementById("title").value = ""
         document.getElementById("btnSubmitAddNewWork").disabled = true
@@ -147,22 +148,23 @@ function createWorkDiv(work) {
     // 'div' creation for work
     const workElement = document.createElement("div")
     workElement.id = "deleteWorkFigure_" + work.id
+    workElement.className = "modal-work"
 
     // Tags creation ('img', 'button', 'i')
     const imageElement = document.createElement("img")
     imageElement.src = work.imageUrl
     imageElement.alt = work.title
+    imageElement.className = "modal-img-trash"
     const trashButton = document.createElement("button")
     trashButton.name = work.id
     trashButton.className = "modal-button-trash"
     const iconElement = document.createElement("i")
     iconElement.name = work.id
     iconElement.className = "fa-solid fa-trash-can fa-xs"
-    trashButton.appendChild(iconElement)
-    trashButton.addEventListener("click", (event) => deleteWork(event))
     workElement.appendChild(imageElement)
     workElement.appendChild(trashButton)
-
+    trashButton.appendChild(iconElement)
+    trashButton.addEventListener("click", (event) => deleteWork(event))
     return workElement
 }
 
@@ -264,14 +266,34 @@ async function checkNewWorkData() {
     const image = document.getElementById("inputFile").files[0]
 
     // Display image in 'img' and hide image selection div (if image is defined)
+    let imageValid = true
+    const imageWarning = document.querySelector(".invalid-image")
+    imageWarning.style.display = "none"
+
     if (image) {
+        const acceptedTypes = ["image/jpeg", "image/png"] // MIME type
+
+        // Check image size
+        if (image.size > 4096000) {
+            imageWarning.textContent = "Taille de l'image trop grande (>4Mo)"
+            imageWarning.style.display = "block"
+            imageValid = false
+        }
+
+        // Check image type
+        if (!acceptedTypes.includes(image.type)) {
+            imageWarning.textContent = "Type d'image non compatible"
+            imageWarning.style.display = "block"
+            imageValid = false
+        }
+
         document.getElementById("selectedImage").src = URL.createObjectURL(image)
         document.querySelector(".modal-setImage").style.display = "none"
         document.querySelector(".modal-displayImage").style.display = "flex"
     }
 
-    // Check the 3 elements needed
-    if (image && title && categoryId) {
+    // Check the 4 elements needed
+    if (image && imageValid && title && categoryId) {
         // Build 'FormData' from data
         const formData = new FormData()
         formData.append("image", image)
