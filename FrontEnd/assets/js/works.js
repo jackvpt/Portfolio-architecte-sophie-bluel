@@ -43,13 +43,11 @@ function checkLogin() {
         document.querySelector(".portfolio-modify").style.display = "block"
         document.querySelector(".filter-bar").style.display = "none"
         document.getElementById("anchor-login-logout").innerText = "logout"
-        document.querySelector(".filter-bar").visibility = "hidden"
     } else {
         document.querySelector(".edition-mode").style.display = "none"
         document.querySelector(".portfolio-modify").style.visibility = "hidden"
         document.getElementById("anchor-login-logout").innerText = "login"
         document.querySelector(".filter-bar").style.display = "flex"
-        document.querySelector(".filter-bar").visibility = "visible"
     }
 }
 
@@ -61,12 +59,12 @@ async function populateFilterBar() {
     try {
         const responseCategories = await fetch(
             "http://localhost:5678/api/categories"
-        ) 
+        )
 
         if (!responseCategories.ok) {
             throw new Error(`Une erreur s'est produite (${responseCategories.status}). Veuillez réessayer plus tard.`)
         }
-        const categories = await responseCategories.json() 
+        const categories = await responseCategories.json()
 
         // Set all categories (avoiding double values)
         const categoriesSet = new Set()
@@ -80,13 +78,13 @@ async function populateFilterBar() {
         populateModalSelect(categoriesSet)
 
         // Get DOM element hosting filter bar
-        const filterBar = document.querySelector(".filter-bar") 
+        const filterBar = document.querySelector(".filter-bar")
         filterBar.innerHTML = ""
 
         for (let categoryTuple of categoriesSet) {
             const category = categoryTuple[0]
             // Button creation
-            const filterBarButton = document.createElement("button") 
+            const filterBarButton = document.createElement("button")
             filterBarButton.textContent = category
 
             // Make button active if its category is equal to filter
@@ -96,10 +94,10 @@ async function populateFilterBar() {
 
             // Filter click event
             filterBarButton.addEventListener("click", function () {
-                filter = category 
+                filter = category
                 populateFilterBar(categories)
                 populateWorks(filter)
-            }) 
+            })
 
             // Add Button to Filter Bar
             filterBar.appendChild(filterBarButton)
@@ -111,29 +109,37 @@ async function populateFilterBar() {
 }
 
 /**
- * FILL PORTFOLIO
+ * POPULATE PORTFOLIO
  * @param {string} filter 
  */
 async function populateWorks(filter) {
-    // Get data from API
-    const reponseWorks = await fetch("http://localhost:5678/api/works") 
-    const works = await reponseWorks.json()
-
-    // Get DOM element hosting works
-    const sectionGallery = document.querySelector(".gallery")
-    sectionGallery.innerHTML = ""
-
-    // Populate Works in 'modal.js'
-    populateModalWorks(works)
-
-    // Iterate through works to display only filtered works
-    for (let i = 0; i < works.length; i++) {
-        const work = works[i] 
-        if (filter === "Tous" || filter === work.category.name) {
-            // Add work element to Gallery
-            const workFigure = createWorkFigure(work)
-            sectionGallery.appendChild(workFigure)
+    try {
+        // Get data from API
+        const responseWorks = await fetch("http://localhost:5678/api/works")
+        if (!responseWorks.ok) {
+            throw new Error(`Une erreur s'est produite (${responseWorks.status}). Veuillez réessayer plus tard.`)
         }
+        const works = await responseWorks.json()
+
+        // Get DOM element hosting works
+        const sectionGallery = document.querySelector(".gallery")
+        sectionGallery.innerHTML = ""
+
+        // Populate Works in 'modal.js'
+        populateModalWorks(works)
+
+        // Iterate through works to display only filtered works
+        for (let i = 0; i < works.length; i++) {
+            const work = works[i]
+            if (filter === "Tous" || filter === work.category.name) {
+                // Add work element to Gallery
+                const workFigure = createWorkFigure(work)
+                sectionGallery.appendChild(workFigure)
+            }
+        }
+    }
+    catch (error) {
+        alert(error)
     }
 }
 

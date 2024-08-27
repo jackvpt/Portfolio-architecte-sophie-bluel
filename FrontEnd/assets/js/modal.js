@@ -187,7 +187,7 @@ async function deleteWork(event) {
             }
         )
         if (!responseDelete.ok) {
-            throw new Error(`Une erreur s'est produite lors de la suppression d'un élément (${response.status}). Veuillez réessayer plus tard.`)
+            throw new Error(`Une erreur s'est produite lors de la suppression d'un élément (${responseDelete.status}). Veuillez réessayer plus tard.`)
         }
         const idToDelete = event.target.name
 
@@ -261,9 +261,9 @@ formNewWork.addEventListener("submit", async function (event) {
  */
 async function checkNewWorkData() {
     // Get file data from DOM
+    const image = document.getElementById("inputFile").files[0]
     const title = document.getElementById("title").value
     const categoryId = document.getElementById("listCategories").value
-    const image = document.getElementById("inputFile").files[0]
 
     // Display image in 'img' and hide image selection div (if image is defined)
     let imageValid = true
@@ -275,7 +275,7 @@ async function checkNewWorkData() {
 
         // Check image size
         if (image.size > 4096000) {
-            imageWarning.textContent = "Taille de l'image trop grande (>4Mo)"
+            imageWarning.textContent = "Taille de l'image trop grande (> 4Mo)"
             imageWarning.style.display = "block"
             imageValid = false
         }
@@ -292,7 +292,7 @@ async function checkNewWorkData() {
         document.querySelector(".modal-displayImage").style.display = "flex"
     }
 
-    // Check the 4 elements needed
+    // Check the 4 elements required
     if (image && imageValid && title && categoryId) {
         // Build 'FormData' from data
         const formData = new FormData()
