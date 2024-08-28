@@ -298,7 +298,7 @@ async function checkNewWorkData() {
         const formData = new FormData()
         formData.append("image", image)
         formData.append("title", title)
-        formData.append("category", parseInt(categoryId))
+        formData.append("category", categoryId)
 
         // Enable submit button
         document.getElementById("btnSubmitAddNewWork").disabled = false
