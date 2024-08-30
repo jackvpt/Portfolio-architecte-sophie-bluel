@@ -191,12 +191,8 @@ async function deleteWork(event) {
         }
         const idToDelete = event.target.name
 
-        document.getElementById(
-            "deleteWorkFigure_" + idToDelete
-        ).remove()
-        document.getElementById(
-            "portfolioWorkFigure_" + idToDelete
-        ).remove()
+        document.getElementById("deleteWorkFigure_" + idToDelete).remove()
+        document.getElementById("portfolioWorkFigure_" + idToDelete).remove()
     }
     catch (error) {
         alert(error)

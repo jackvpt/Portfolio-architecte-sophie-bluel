@@ -26,8 +26,16 @@ async function login(event) {
 
         // Check email / password
         if (!response.ok) {
-            document.querySelector(".invalid-user").style.visibility = "visible"
-            // throw new Error(`Erreur dans l'identifiant ou le mot de passe (${response.status}).`)
+            const lblInvalidUser = document.getElementById("lblInvalidUser")
+            switch (response.status) {
+                case 401: // Not Authorized
+                    lblInvalidUser.innerText="Mot de passe incorrect"
+                    break;
+                case 404: // User not found
+                    lblInvalidUser.innerText="Utilisateur inconnu"
+                    break;
+            }
+            lblInvalidUser.style.visibility = "visible"
             return
         }
 
